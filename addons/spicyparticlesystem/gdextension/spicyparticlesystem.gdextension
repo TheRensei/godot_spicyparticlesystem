@@ -1,0 +1,31 @@
+[configuration]
+
+entry_symbol = "spicyparticlesystem_library_init"
+compatibility_minimum = 4.2
+reloadable = true
+
+[libraries]
+
+macos.debug = "osx/spicyparticlesystem.macos.template_debug.framework"
+macos.release = "osx/spicyparticlesystem.macos.template_release.framework"
+windows.debug.x86_64 = "win64/spicyparticlesystem.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "win64/spicyparticlesystem.windows.template_release.x86_64.dll"
+linux.debug.x86_64 = "linux64/spicyparticlesystem.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "linux64/spicyparticlesystem.linux.template_release.x86_64.so"
+
+[icons]
+SpicyParticleGenerator = "res://addons/spicyparticlesystem/icons/GenIcon.svg"
+SpicyParticleSystemNode = "res://addons/spicyparticlesystem/icons/NodeIcon.svg"
+LifetimeGenerator = "res://addons/spicyparticlesystem/icons/LifetimeGenIcon.svg"
+PositionGenerator = "res://addons/spicyparticlesystem/icons/PositionGenIcon.svg"
+ColorGenerator = "res://addons/spicyparticlesystem/icons/ColorGenIcon.svg"
+SizeGenerator = "res://addons/spicyparticlesystem/icons/SizeGenIcon.svg"
+VelocityGenerator = "res://addons/spicyparticlesystem/icons/VelocityGenIcon.svg"
+RotationGenerator = "res://addons/spicyparticlesystem/icons/RotationGenIcon.svg"
+
+SpicyParticleUpdater = "res://addons/spicyparticlesystem/icons/UpIcon.svg"
+ColorUpdater = "res://addons/spicyparticlesystem/icons/ColorUpIcon.svg"
+VelocityUpdater = "res://addons/spicyparticlesystem/icons/VelocityUpIcon.svg"
+AccelerationUpdater = "res://addons/spicyparticlesystem/icons/AccelerationUpIcon.svg"
+RotationUpdater = "res://addons/spicyparticlesystem/icons/RotationUpIcon.svg"
+SizeUpdater = "res://addons/spicyparticlesystem/icons/SizeUpIcon.svg"
