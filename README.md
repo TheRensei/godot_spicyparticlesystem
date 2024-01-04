@@ -4,9 +4,16 @@
 </p>
 <h1 align="center">⭐Spicy Particle System⭐</h1>
 <h1 align="center">
-  
-[![GitHub all releases](https://img.shields.io/github/downloads/TheRensei/godot_spicyparticlesystem/total)](https://github.com/TheRensei/godot_spicyparticlesystem/releases)
-[![GitHub release](https://img.shields.io/github/v/release/TheRensei/godot_spicyparticlesystem)](https://github.com/TheRensei/godot_spicyparticlesystem/releases/latest)
-[![GitHub License](https://img.shields.io/github/license/TheRensei/godot_spicyparticlesystem)](https://github.com/TheRensei/godot_spicyparticlesystem/blob/main/LICENSE)
-
+  <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases">
+    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/TheRensei/godot_spicyparticlesystem/total">
+  </a>
+  <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases/latest">
+    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/TheRensei/godot_spicyparticlesystem?filter=beta">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/TheRensei/godot_spicyparticlesystem?style=flat-square" alt="LICENSE">
+  </a>
 </h1>
+
+
+
