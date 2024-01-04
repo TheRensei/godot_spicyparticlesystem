@@ -43,3 +43,28 @@
 </details>
 
 
+---
+
+</details>
+
+<details><summary> <h3>  References </h3> </summary>
+  
+Big thanks to Bartlomiej Filipek for his [blog post](https://www.cppstories.com/2014/04/flexible-particle-system-start/) - it was extremely helpful and helped me understand how particle systems are written in the first place. I thought that this approach was a great place to start with so this is what this system is based on.
+
+Links to icons I used:
+
+[Link](https://www.svgrepo.com/svg/320810/flaming-claw)
+[Link](https://www.svgrepo.com/svg/525367/heart-shine)
+[Link](https://www.svgrepo.com/svg/533001/square-dashed)
+[Link](https://www.svgrepo.com/svg/458610/color-mode)
+[Link](https://www.svgrepo.com/svg/489117/scale-1)
+[Link](https://www.svgrepo.com/svg/374909/high-velocity-sales)
+[Link](https://www.svgrepo.com/svg/375107/rotate)
+[Link](https://www.svgrepo.com/svg/375045/product-transfer)
+[Link](https://www.svgrepo.com/svg/502881/update)
+[Link](https://www.svgrepo.com/svg/502459/alarm)
+
+I've resized, optimized and coloured most of them, the main icon is a combination of 2 other icons.
+With [CC](https://www.svgrepo.com/page/licensing/#CC%20Attribution) and PD licenses.
+
+</details>
