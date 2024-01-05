@@ -4,9 +4,6 @@
 </p>
 <h1 align="center">Spicy Particle System</h1>
 <p align="center">
-  <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases">
-    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/TheRensei/godot_spicyparticlesystem/total">
-  </a>
   <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases/latest">
     <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/TheRensei/godot_spicyparticlesystem?filter=beta">
   </a>
