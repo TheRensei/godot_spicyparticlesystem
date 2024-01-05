@@ -2,7 +2,7 @@
 <p align="center">
 <img src="https://github.com/TheRensei/godot_spicyparticlesystem/blob/main/addons/spicyparticlesystem/icons/NodeIcon.svg" width="100" height="100"/>
 </p>
-<h1 align="center">⭐Spicy Particle System⭐</h1>
+<h1 align="center">Spicy Particle System</h1>
 <p align="center">
   <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases">
     <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/TheRensei/godot_spicyparticlesystem/total">
