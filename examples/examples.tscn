@@ -1,0 +1,336 @@
+[gd_scene load_steps=68 format=3 uid="uid://bymobfdo5ksdd"]
+
+[ext_resource type="Texture2D" uid="uid://c1kqc5k4va3om" path="res://assets/kenneyparticlepack/PNG (Transparent)/star_05.png" id="1_jgu8e"]
+[ext_resource type="Texture2D" uid="uid://dvagiprwgyalh" path="res://assets/kenneyparticlepack/PNG (Transparent)/flare_01.png" id="2_rfqxt"]
+[ext_resource type="Texture2D" uid="uid://b0twjnq8gf6um" path="res://assets/kenneyparticlepack/PNG (Transparent)/star_01.png" id="3_ux8d1"]
+[ext_resource type="Texture2D" uid="uid://csfbledqifl8h" path="res://assets/kenneyparticlepack/PNG (Transparent)/light_02.png" id="4_o677m"]
+[ext_resource type="Texture2D" uid="uid://c1ggjoem6jh2q" path="res://assets/kenneyparticlepack/PNG (Transparent)/circle_04.png" id="5_au5jd"]
+
+[sub_resource type="SpicyParticleBurst" id="SpicyParticleBurst_23gwn"]
+count = 1
+
+[sub_resource type="LifetimeGenerator" id="LifetimeGenerator_k7u67"]
+lifetime = 0.4
+
+[sub_resource type="PointEmissionShape" id="PointEmissionShape_6tlti"]
+
+[sub_resource type="PositionGenerator" id="PositionGenerator_kwtl6"]
+emission_shape = SubResource("PointEmissionShape_6tlti")
+
+[sub_resource type="ColorGenerator" id="ColorGenerator_lcrpx"]
+color = Color(0.980392, 0.933333, 0.196078, 1)
+
+[sub_resource type="Gradient" id="Gradient_hliv2"]
+offsets = PackedFloat32Array(0, 0.154952, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="ColorUpdater" id="ColorUpdater_oepsy"]
+color_over_lifetime = SubResource("Gradient_hliv2")
+
+[sub_resource type="Curve" id="Curve_8bo5g"]
+max_value = 1.5
+_data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.232416, 0.885232), 1.98473, 1.98473, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="SizeUpdater" id="SizeUpdater_ofdif"]
+size_type = 4
+size = SubResource("Curve_8bo5g")
+
+[sub_resource type="QuadMesh" id="QuadMesh_4dtoo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_41wxd"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_jgu8e")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="SpicyParticleBurst" id="SpicyParticleBurst_c7lqo"]
+count = 1
+
+[sub_resource type="LifetimeGenerator" id="LifetimeGenerator_vonmm"]
+lifetime = 0.25
+
+[sub_resource type="PointEmissionShape" id="PointEmissionShape_legju"]
+
+[sub_resource type="PositionGenerator" id="PositionGenerator_fsvcr"]
+emission_shape = SubResource("PointEmissionShape_legju")
+
+[sub_resource type="ColorGenerator" id="ColorGenerator_qemf5"]
+color = Color(0.917647, 0.882353, 0.317647, 1)
+
+[sub_resource type="SizeGenerator" id="SizeGenerator_hueup"]
+size = Vector3(3, 2, 1)
+
+[sub_resource type="Curve" id="Curve_nqax0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.270642, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_3dfwt"]
+_data = [Vector2(0, 0.0940266), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_le3fo"]
+_data = [Vector2(0.486239, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="SizeUpdater" id="SizeUpdater_feoru"]
+size_type = 8
+size_x = SubResource("Curve_nqax0")
+size_y = SubResource("Curve_3dfwt")
+size_z = SubResource("Curve_le3fo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vlgds"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_rfqxt")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="SpicyParticleBurst" id="SpicyParticleBurst_spbsq"]
+time = 0.2
+count = 30
+
+[sub_resource type="SpicyParticleBurst" id="SpicyParticleBurst_eqiui"]
+count = 20
+
+[sub_resource type="LifetimeGenerator" id="LifetimeGenerator_5y6pv"]
+lifetime_type = 2
+lifetime = Vector2(0.2, 0.5)
+
+[sub_resource type="PointEmissionShape" id="PointEmissionShape_yvyb5"]
+
+[sub_resource type="PositionGenerator" id="PositionGenerator_evr2l"]
+emission_shape = SubResource("PointEmissionShape_yvyb5")
+
+[sub_resource type="ColorGenerator" id="ColorGenerator_tvjke"]
+color = Color(1, 0.933333, 0.572549, 1)
+
+[sub_resource type="SizeGenerator" id="SizeGenerator_2w54r"]
+size_multiplier_type = 2
+size_multiplier = Vector2(0.05, 0.15)
+
+[sub_resource type="VelocityGenerator" id="VelocityGenerator_51cc3"]
+velocity_type = 2
+velocity_min = Vector3(-1, -1, -1)
+velocity_max = Vector3(1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_e6qnv"]
+offsets = PackedFloat32Array(0, 0.514377, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="ColorUpdater" id="ColorUpdater_w324m"]
+color_over_lifetime = SubResource("Gradient_e6qnv")
+
+[sub_resource type="Curve" id="Curve_7oqbj"]
+_data = [Vector2(0, 0), 0.0, 1.16181, 0, 0, Vector2(0.642202, 0.309735), 0.0, 0.0, 0, 0, Vector2(0.851682, 1), 0.0252822, 0.0252822, 0, 0, Vector2(1, 0), -5.89815, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="SizeUpdater" id="SizeUpdater_i48c7"]
+size_type = 4
+size = SubResource("Curve_7oqbj")
+
+[sub_resource type="VelocityUpdater" id="VelocityUpdater_x56al"]
+radial_velocity = 0.5
+orbital_velocity = Vector3(0, 360, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l08by"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_ux8d1")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="SpicyParticleBurst" id="SpicyParticleBurst_vgqat"]
+count = 1
+
+[sub_resource type="LifetimeGenerator" id="LifetimeGenerator_n1imr"]
+
+[sub_resource type="PointEmissionShape" id="PointEmissionShape_uoygf"]
+
+[sub_resource type="PositionGenerator" id="PositionGenerator_lmh68"]
+emission_shape = SubResource("PointEmissionShape_uoygf")
+
+[sub_resource type="ColorGenerator" id="ColorGenerator_w54bq"]
+color = Color(0.141176, 0.141176, 0.141176, 1)
+
+[sub_resource type="Gradient" id="Gradient_exg2q"]
+offsets = PackedFloat32Array(0, 0.0926518, 0.159744, 0.308307, 0.527157)
+colors = PackedColorArray(0, 0, 0, 1, 0.582031, 0.452723, 0.327393, 1, 1, 0.638977, 0.289063, 1, 0.404348, 0.325744, 0.116882, 1, 0, 0, 0, 1)
+
+[sub_resource type="ColorUpdater" id="ColorUpdater_3vnbr"]
+color_over_lifetime = SubResource("Gradient_exg2q")
+
+[sub_resource type="Curve" id="Curve_8oocp"]
+max_value = 1.3
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.365443, 0.912196), 2.42469, 2.42469, 0, 0, Vector2(0.620795, 1.3), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="SizeUpdater" id="SizeUpdater_t5b62"]
+size_type = 4
+size = SubResource("Curve_8oocp")
+
+[sub_resource type="RotationUpdater" id="RotationUpdater_ihsm6"]
+rotation = Vector3(0, 0, 360)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7q3h"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("4_o677m")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="SpicyParticleBurst" id="SpicyParticleBurst_tx4iu"]
+count = 1
+
+[sub_resource type="LifetimeGenerator" id="LifetimeGenerator_5hffm"]
+lifetime = 0.75
+
+[sub_resource type="Curve" id="Curve_iwbm5"]
+max_value = 1.5
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.287462, 0.626374), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="SizeUpdater" id="SizeUpdater_owp6f"]
+size_type = 4
+size = SubResource("Curve_iwbm5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xmls3"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("5_au5jd")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="SpicyParticleBurst" id="SpicyParticleBurst_5suuk"]
+count = 1
+
+[sub_resource type="LifetimeGenerator" id="LifetimeGenerator_3ibb8"]
+lifetime = 0.5
+
+[sub_resource type="PositionGenerator" id="PositionGenerator_vy7vv"]
+emission_shape = SubResource("PointEmissionShape_6tlti")
+
+[sub_resource type="ColorGenerator" id="ColorGenerator_hyy2r"]
+color = Color(0.462745, 0.258824, 0.0313726, 0.796078)
+
+[sub_resource type="SizeGenerator" id="SizeGenerator_70a3r"]
+size_multiplier = 2.0
+
+[sub_resource type="Gradient" id="Gradient_ye70q"]
+offsets = PackedFloat32Array(0, 0.154952, 0.792332)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="ColorUpdater" id="ColorUpdater_cmo68"]
+color_over_lifetime = SubResource("Gradient_ye70q")
+
+[sub_resource type="SizeUpdater" id="SizeUpdater_t1vnc"]
+size_type = 4
+size = SubResource("Curve_8bo5g")
+
+[sub_resource type="QuadMesh" id="QuadMesh_hicai"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gwvdf"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_jgu8e")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Hit" type="SpicyParticleSystemNode" parent="."]
+duration = 3.0
+emit_rate = 0.0
+emit_bursts = Array[SpicyParticleBurst]([SubResource("SpicyParticleBurst_23gwn")])
+lifetime_generator = SubResource("LifetimeGenerator_k7u67")
+position_generator = SubResource("PositionGenerator_kwtl6")
+color_generator = SubResource("ColorGenerator_lcrpx")
+color_updater = SubResource("ColorUpdater_oepsy")
+size_updater = SubResource("SizeUpdater_ofdif")
+mesh = SubResource("QuadMesh_4dtoo")
+material_override = SubResource("StandardMaterial3D_41wxd")
+
+[node name="Horizontal" type="SpicyParticleSystemNode" parent="Hit"]
+looping = false
+duration = 2.0
+emit_rate = 0.0
+emit_bursts = Array[SpicyParticleBurst]([SubResource("SpicyParticleBurst_c7lqo")])
+lifetime_generator = SubResource("LifetimeGenerator_vonmm")
+position_generator = SubResource("PositionGenerator_fsvcr")
+color_generator = SubResource("ColorGenerator_qemf5")
+size_generator = SubResource("SizeGenerator_hueup")
+color_updater = SubResource("ColorUpdater_oepsy")
+size_updater = SubResource("SizeUpdater_feoru")
+mesh = SubResource("QuadMesh_4dtoo")
+material_override = SubResource("StandardMaterial3D_vlgds")
+
+[node name="Bits" type="SpicyParticleSystemNode" parent="Hit"]
+looping = false
+duration = 2.0
+emit_rate = 0.0
+emit_bursts = Array[SpicyParticleBurst]([SubResource("SpicyParticleBurst_spbsq"), SubResource("SpicyParticleBurst_eqiui")])
+lifetime_generator = SubResource("LifetimeGenerator_5y6pv")
+position_generator = SubResource("PositionGenerator_evr2l")
+color_generator = SubResource("ColorGenerator_tvjke")
+size_generator = SubResource("SizeGenerator_2w54r")
+velocity_generator = SubResource("VelocityGenerator_51cc3")
+color_updater = SubResource("ColorUpdater_w324m")
+size_updater = SubResource("SizeUpdater_i48c7")
+velocity_updater = SubResource("VelocityUpdater_x56al")
+mesh = SubResource("QuadMesh_4dtoo")
+material_override = SubResource("StandardMaterial3D_l08by")
+
+[node name="WaveSmooth" type="SpicyParticleSystemNode" parent="Hit"]
+looping = false
+duration = 2.0
+emit_rate = 0.0
+emit_bursts = Array[SpicyParticleBurst]([SubResource("SpicyParticleBurst_vgqat")])
+lifetime_generator = SubResource("LifetimeGenerator_n1imr")
+position_generator = SubResource("PositionGenerator_lmh68")
+color_generator = SubResource("ColorGenerator_w54bq")
+color_updater = SubResource("ColorUpdater_3vnbr")
+size_updater = SubResource("SizeUpdater_t5b62")
+rotation_updater = SubResource("RotationUpdater_ihsm6")
+mesh = SubResource("QuadMesh_4dtoo")
+material_override = SubResource("StandardMaterial3D_u7q3h")
+
+[node name="WaveSharp" type="SpicyParticleSystemNode" parent="Hit"]
+looping = false
+duration = 2.0
+emit_rate = 0.0
+emit_bursts = Array[SpicyParticleBurst]([SubResource("SpicyParticleBurst_tx4iu")])
+lifetime_generator = SubResource("LifetimeGenerator_5hffm")
+position_generator = SubResource("PositionGenerator_lmh68")
+color_updater = SubResource("ColorUpdater_3vnbr")
+size_updater = SubResource("SizeUpdater_owp6f")
+mesh = SubResource("QuadMesh_4dtoo")
+material_override = SubResource("StandardMaterial3D_xmls3")
+
+[node name="DarkBG" type="SpicyParticleSystemNode" parent="Hit"]
+looping = false
+duration = 3.0
+emit_rate = 0.0
+emit_bursts = Array[SpicyParticleBurst]([SubResource("SpicyParticleBurst_5suuk")])
+lifetime_generator = SubResource("LifetimeGenerator_3ibb8")
+position_generator = SubResource("PositionGenerator_vy7vv")
+color_generator = SubResource("ColorGenerator_hyy2r")
+size_generator = SubResource("SizeGenerator_70a3r")
+color_updater = SubResource("ColorUpdater_cmo68")
+size_updater = SubResource("SizeUpdater_t1vnc")
+mesh = SubResource("QuadMesh_hicai")
+material_override = SubResource("StandardMaterial3D_gwvdf")
