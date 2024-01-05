@@ -3,7 +3,7 @@
 <img src="https://github.com/TheRensei/godot_spicyparticlesystem/blob/main/addons/spicyparticlesystem/icons/NodeIcon.svg" width="100" height="100"/>
 </p>
 <h1 align="center">⭐Spicy Particle System⭐</h1>
-<h1 align="center">
+<p align="center">
   <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases">
     <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/TheRensei/godot_spicyparticlesystem/total">
   </a>
@@ -13,35 +13,31 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/github/license/TheRensei/godot_spicyparticlesystem?style=flat-square" alt="LICENSE">
   </a>
-</h1>
- 
-![](/.images/Main.png)
+</p>
+
+> [!WARNING]  
+> This extension is not production ready yet. Backup your projects before testing!
 
 
-<details><summary> <h2>  Emitter </h2> </summary>
-  
-![](/.images/Emitter.png)
-  
-</details>
+<img align="left" src="/.images/Main.png">
 
-<details><summary> <h2> <img src="/addons/spicyparticlesystem/icons/GenIcon.svg"/> Generators </h2> </summary>
-  
-![](/.images/Generators.png)
+## Introduction
+Spicy Particle System is a powerful and customizable particle system written in C++ as a GDExtension for the Godot Engine. This system is designed to offer improved performance compared to the existing CPUParticles3D while providing extensive customization options for your VFX.
 
-</details>
+## Features
 
-<details><summary> <h2> <img src="/addons/spicyparticlesystem/icons/UpIcon.svg"/> Updaters </h2> </summary>
-  
-![](/.images/Updaters.png)
+- **Modular Design:** Features a modular design with modules divided into generators and updaters. Generators define starting particle parameters, while updaters dynamically update particle properties over their lifetime.
+> [!NOTE]  
+> Modules are Resources; only assigned modules are executed. Consider the impact on performance when utilizing multiple modules.
+- **3D transforms:** Particles are transformed in three dimensions, providing the flexibility to customize size, rotation, velocity, and more with full control over each dimension.
+- **On-Screen Editor:** The intuitive on-screen editor allows control of playback and seeking but also displays real-time information on the number of alive particles within the selected system.
+- **Random Seed Control:** Take command of randomness with precise control over the random seed, allowing for reproducible and fine-tuned variations in your particle system.
+- **Emit Rate Over Distance:** Dynamically spawn particles based on the distance traveled.
+- **Burst Emission:** Shedule particles to be emitted at specific time.
+- **CPU Alignment:** While shader alignment is favored for its efficiency, the system also includes the option of CPU particle alignment.
 
-</details>
 
-<details><summary> <h2>  Renderer</h2> </summary>
-  
-![](/.images/Renderer.png)
-
-</details>
-
+<br clear="left"/>
 
 ---
 
@@ -51,7 +47,7 @@
   
 Big thanks to Bartlomiej Filipek for his [blog post](https://www.cppstories.com/2014/04/flexible-particle-system-start/) - it was extremely helpful and helped me understand how particle systems are written in the first place. I thought that this approach was a great place to start with so this is what this system is based on.
 
-Links to icons I used:
+Links to icons used:
 
 [Link](https://www.svgrepo.com/svg/320810/flaming-claw)
 [Link](https://www.svgrepo.com/svg/525367/heart-shine)
