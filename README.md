@@ -21,10 +21,11 @@
 > [!WARNING]  
 > This extension is not production ready yet. Backup your projects before testing!
 
+<h2 align="center">Introduction</h2>
 
 <img align="left" src="/.images/Main.png">
 
-## Introduction
+
 Spicy Particle System is a powerful and customizable particle system written in C++ as a GDExtension for the Godot Engine. This system is designed to offer improved performance compared to the existing CPUParticles3D while providing extensive customization options for your VFX.
 
 ## Features
@@ -38,6 +39,7 @@ Spicy Particle System is a powerful and customizable particle system written in 
 - **Emit Rate Over Distance:** Dynamically spawn particles based on the distance traveled.
 - **Burst Emission:** Shedule particles to be emitted at specific time.
 - **CPU Alignment:** While shader alignment is favored for its efficiency, the system also includes the option of CPU particle alignment.
+- **Hierarchical playback:** Hierarchical playback synchronizes children systems' playback with the parent system if the direct parent is also a particle system. This feature allows for intricate control over particle system behavior in complex hierarchies.
 
 
 <br clear="left"/>
