@@ -13,6 +13,9 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/github/license/TheRensei/godot_spicyparticlesystem?style=flat-square" alt="LICENSE">
   </a>
+  <a href="https://github.com/TheRensei/godot_spicyparticlesystem/wiki">
+    <img alt="Static Badge" src="https://img.shields.io/badge/wiki-blue">
+  </a>
 </p>
 
 > [!WARNING]  
