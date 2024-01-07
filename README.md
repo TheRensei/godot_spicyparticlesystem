@@ -25,7 +25,7 @@
 
 Spicy Particle System is a powerful and customizable particle system written in C++ as a GDExtension for the Godot Engine. This system is designed to offer improved performance compared to the existing CPUParticles3D while providing extensive customization options for your VFX.
 
-## Features
+<h2 align="center">Features</h2>
 
 - **Modular Design:** Features a modular design with modules divided into generators and updaters. Generators define starting particle parameters, while updaters dynamically update particle properties over their lifetime.
 > [!NOTE]  
@@ -41,9 +41,31 @@ Spicy Particle System is a powerful and customizable particle system written in 
 
 <br clear="left"/>
 
----
+## Documentation
+Detailed documentation will be available in the [Wiki](https://github.com/TheRensei/godot_spicyparticlesystem/wiki), providing comprehensive information on installation, usage, and customization. Check out the [getting started](https://github.com/TheRensei/godot_spicyparticlesystem/wiki/Getting-Started) section.
+
+## Upcoming features
+> [!NOTE]  
+> Please note that development timelines may vary, and unforeseen challenges could impact the final feature set. Consider these as potential improvements, not guarantees.
+
+- More emitter shapes.
+- Emitter shapes gizmos.
+- Improvements to the on-screen control panel.
+- Trails.
+- Animation player integration.
+- Noise updater.
+- Presets.
+- Optimizations:
+     - Multithreading:
+          - System - for systems with small amount of particles - executed on it's own thread.
+          - Data - for systems with large amount of particles - typical data threading.
+     - Conditional data generation - less memory used when small number of modules is assigned.
 
 </details>
+
+## License
+Spicy Particle System is licensed under the MIT <a href="LICENSE">License</a>, allowing for both personal and commercial use.
+
 
 <details><summary> <h3>  References </h3> </summary>
   
