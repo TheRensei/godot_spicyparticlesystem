@@ -4,8 +4,11 @@
 </p>
 <h1 align="center">Spicy Particle System</h1>
 <p align="center">
+  <a href="https://godotengine.org/download/windows/">
+    <img alt="Static Badge" src="https://img.shields.io/badge/Godot-4.2%2B-blue">
+  </a>
   <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases/latest">
-    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/TheRensei/godot_spicyparticlesystem?filter=beta">
+    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/TheRensei/godot_spicyparticlesystem?filter=*beta">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/github/license/TheRensei/godot_spicyparticlesystem?style=flat-square" alt="LICENSE">
@@ -15,6 +18,9 @@
   </a>
 </p>
 
+> [!IMPORTANT]  
+> This extension is developed for godot 4.2 and above.
+
 > [!WARNING]  
 > This extension is not production ready yet. Backup your projects before testing!
 
@@ -23,7 +29,7 @@
 <img align="left" src="/.images/Main.png">
 
 
-Spicy Particle System is a powerful and customizable particle system written in C++ as a GDExtension for the Godot Engine. This system is designed to offer improved performance compared to the existing CPUParticles3D while providing extensive customization options for your VFX.
+Spicy Particle System is a powerful and customizable particle system written in C++ as a GDExtension for the Godot Engine 4.2+. This system is designed to offer improved performance compared to the existing CPUParticles3D while providing extensive customization options for your VFX.
 
 <h2 align="center">Features</h2>
 
