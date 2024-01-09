@@ -93,4 +93,6 @@ Links to icons used:
 I've resized, optimized and coloured most of them, the main icon is a combination of 2 other icons.
 With [CC](https://www.svgrepo.com/page/licensing/#CC%20Attribution) and PD licenses.
 
+Example VFX textures are from Kenney's [particle pack](https://www.kenney.nl/assets/particle-pack) at [kenney.nl](https://www.kenney.nl/assets)
+
 </details>
