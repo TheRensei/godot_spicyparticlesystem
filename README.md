@@ -1,6 +1,6 @@
 
 <p align="center">
-<img src="https://github.com/TheRensei/godot_spicyparticlesystem/blob/main/addons/spicyparticlesystem/icons/NodeIcon.svg" width="100" height="100"/>
+<img src="https://github.com/TheRensei/godot_spicyparticlesystem/blob/main/spicy-demo/addons/spicyparticlesystem/icons/NodeIcon.svg" width="100" height="100"/>
 </p>
 <h1 align="center">Spicy Particle System</h1>
 <p align="center">
