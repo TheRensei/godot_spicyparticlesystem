@@ -124,8 +124,8 @@ void godot::SpicyParticleSystemNode::_bind_methods()
 	ADD_SIGNAL(MethodInfo("stop"));
 }
 
-godot::SpicyParticleSystemNode::SpicyParticleSystemNode() : max_particles(100), 
-initialized(false), 
+godot::SpicyParticleSystemNode::SpicyParticleSystemNode() : max_particles(100),
+initialized(false),
 is_paused(false),
 is_playing(false),
 is_stopped(true),
@@ -223,33 +223,33 @@ void godot::SpicyParticleSystemNode::_notification(int p_what)
 {
 	switch (p_what) {
 
-		case NOTIFICATION_ENTER_TREE: {
-			_update_null_properties();
-		} break;
+	case NOTIFICATION_ENTER_TREE: {
+		_update_null_properties();
+	} break;
 
-		case NOTIFICATION_INTERNAL_PROCESS: {
-			_internal_process(get_process_delta_time());
-		} break;
+	case NOTIFICATION_INTERNAL_PROCESS: {
+		_internal_process(get_process_delta_time());
+	} break;
 
-		case NOTIFICATION_READY: {
-			if (!Engine::get_singleton()->is_editor_hint() && initialized && play_on_start) {
-				play();
-				set_particle_alignment(m_particle_alignment);
-			}
-		} break;
+	case NOTIFICATION_READY: {
+		if (!Engine::get_singleton()->is_editor_hint() && initialized && play_on_start) {
+			play();
+			set_particle_alignment(m_particle_alignment);
+		}
+	} break;
 
-		case NOTIFICATION_TRANSFORM_CHANGED:
-		{
-			if (world_space)
-				node_transform = get_global_transform();
-			else
-				node_transform = Transform3D();
+	case NOTIFICATION_TRANSFORM_CHANGED:
+	{
+		if (world_space)
+			node_transform = get_global_transform();
+		else
+			node_transform = Transform3D();
 
-		} break;
+	} break;
 
-		case NOTIFICATION_EXIT_TREE: {
-			_stop_no_signal();
-		} break;
+	case NOTIFICATION_EXIT_TREE: {
+		_stop_no_signal();
+	} break;
 	}
 
 }
@@ -419,7 +419,7 @@ void godot::SpicyParticleSystemNode::set_alignment_target(const NodePath& p_path
 
 	if (m_renderer.is_valid()) {
 		m_renderer->set_alignment_target(NULL);
-		if(!p_path.is_empty())
+		if (!p_path.is_empty())
 			m_renderer->set_alignment_target(get_node<Node3D>(m_alignment_target));
 	}
 }
@@ -431,7 +431,7 @@ NodePath godot::SpicyParticleSystemNode::get_alignment_target() const
 
 void godot::SpicyParticleSystemNode::emit_burst(int count)
 {
-	if(initialized)
+	if (initialized)
 		m_particle_system->emit(0.0f, count);
 }
 
@@ -439,7 +439,7 @@ void godot::SpicyParticleSystemNode::set_emit_rate(float p_emit_rate)
 {
 	emit_rate = p_emit_rate;
 
-	if(initialized)
+	if (initialized)
 		m_emitter->set_emit_rate(emit_rate);
 }
 
@@ -489,7 +489,7 @@ void godot::SpicyParticleSystemNode::set_emit_bursts(const TypedArray<SpicyParti
 		}
 	}
 
-	if(m_emitter.is_valid())
+	if (m_emitter.is_valid())
 		m_emitter->set_bursts(m_emit_bursts);
 }
 
@@ -579,7 +579,7 @@ void godot::SpicyParticleSystemNode::seek(double sim_time)
 		normalized_duration_time = std::fmod(temp, duration) / duration;
 		m_particle_system->update(simulation_delta, normalized_duration_time, node_transform);
 		temp += simulation_delta;
-		
+
 		if (temp >= duration && !looping)
 		{
 			m_particle_system->set_emitting(false);
@@ -646,7 +646,7 @@ void godot::SpicyParticleSystemNode::pause(bool include_children)
 
 void godot::SpicyParticleSystemNode::play(bool include_children)
 {
-	if(is_playing)
+	if (is_playing)
 		return;
 
 	if (include_children) {
@@ -774,7 +774,7 @@ void godot::SpicyParticleSystemNode::set_lifetime_generator(const Ref<LifetimeGe
 	m_emitter->remove_generator(m_lifetime_generator);
 	m_lifetime_generator = p_lifetime_generator;
 
-	if(m_lifetime_generator.is_valid())
+	if (m_lifetime_generator.is_valid())
 		m_emitter->add_generator(m_lifetime_generator);
 
 	_update_null_properties();
@@ -818,7 +818,7 @@ void godot::SpicyParticleSystemNode::set_size_generator(const Ref<SizeGenerator>
 {
 	m_emitter->remove_generator(m_size_generator);
 	m_size_generator = p_size_generator;
-	
+
 	if (m_size_generator.is_valid())
 		m_emitter->add_generator(m_size_generator);
 }
@@ -955,9 +955,9 @@ int godot::SpicyParticleSystemNode::get_max_particle_count() const
 
 int godot::SpicyParticleSystemNode::get_particle_count() const
 {
-	if(initialized)
+	if (initialized)
 		return m_particle_system->num_alive_particles();
-	
+
 	return -1;
 }
 

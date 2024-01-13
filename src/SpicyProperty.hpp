@@ -265,7 +265,7 @@ namespace godot {
 	protected:
 		static void _bind_methods();
 	public:
-		inline SphereEmissionShape() : radius(1.0) , radius_thickness(1.0) {}
+		inline SphereEmissionShape() : radius(1.0), radius_thickness(1.0) {}
 		virtual ~SphereEmissionShape() {}
 		virtual Vector3 get_value(const Ref<RandomNumberGenerator>& rng, real_t sample = 0) const override;
 

@@ -22,7 +22,8 @@ namespace godot {
 	//};
 
 	class MultiMeshParticleRenderer : public RefCounted
-	{ 	GDCLASS(MultiMeshParticleRenderer, RefCounted)
+	{
+		GDCLASS(MultiMeshParticleRenderer, RefCounted)
 	public:
 		enum Alignment
 		{

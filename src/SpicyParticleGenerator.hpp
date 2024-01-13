@@ -48,7 +48,7 @@ namespace godot
 	};
 
 	class PositionGenerator : public SpicyParticleGenerator {
-		GDCLASS(PositionGenerator, SpicyParticleGenerator);	
+		GDCLASS(PositionGenerator, SpicyParticleGenerator);
 	protected:
 		Ref<EmissionShape> emission_shape;
 		Vector3 scale;

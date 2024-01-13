@@ -13,10 +13,11 @@
 namespace godot
 {
 	class ParticleData : public RefCounted
-	{	GDCLASS(ParticleData, RefCounted)		
+	{
+		GDCLASS(ParticleData, RefCounted)
 	private:
 		bool initialized;
-	public:	
+	public:
 		//particle data
 		Vector3* position;
 		Vector3* rotation;
@@ -49,7 +50,7 @@ namespace godot
 	public:
 		inline ParticleData() : initialized(false),
 			particle_count(0),
-			count_alive(0), 
+			count_alive(0),
 			max_duration(0),
 			current_duration_normalized(0),
 			particle_node(nullptr),

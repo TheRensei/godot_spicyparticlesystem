@@ -30,7 +30,7 @@ namespace godot {
 		inline void set_time(float p_time) { time = MAX(0, p_time); /*normalized_time = CLAMP(time / max_time, 0.0, 1.0);*/ }
 		inline float get_time() const { return time; }
 
-		inline void set_count(int p_count) { count = MAX(0,p_count); }
+		inline void set_count(int p_count) { count = MAX(0, p_count); }
 		inline int get_count() const { return count; }
 	};
 
@@ -53,11 +53,11 @@ namespace godot {
 		Vector<Ref<SpicyParticleGenerator>> m_generators;
 		static void _bind_methods();
 	public:
-		inline SpicyParticleEmitter() : emit_rate(0), 
+		inline SpicyParticleEmitter() : emit_rate(0),
 			emit_rate_over_distance(0),
-			e_time_accumulator(0), 
+			e_time_accumulator(0),
 			burst_time_accumulator(0),
-			prev_position(Vector3(0,0,0)), 
+			prev_position(Vector3(0, 0, 0)),
 			distance_traveled(0) { }
 
 		~SpicyParticleEmitter();
@@ -78,7 +78,8 @@ namespace godot {
 	};
 
 	class SpicyParticleSystem : public RefCounted
-	{ 	GDCLASS(SpicyParticleSystem, RefCounted)
+	{
+		GDCLASS(SpicyParticleSystem, RefCounted)
 	private:
 		bool is_emitting;
 	protected:
@@ -109,8 +110,8 @@ namespace godot {
 		inline size_t num_all_particles() const { return particles->particle_count; }
 		inline size_t num_alive_particles() const { return particles->count_alive; }
 
-		inline void add_emitter(const Ref<SpicyParticleEmitter> emitter) {emitters.push_back(emitter); }
-		inline void add_updater(const Ref<SpicyParticleUpdater>& updater) {updaters.insert(0, updater); }
+		inline void add_emitter(const Ref<SpicyParticleEmitter> emitter) { emitters.push_back(emitter); }
+		inline void add_updater(const Ref<SpicyParticleUpdater>& updater) { updaters.insert(0, updater); }
 		inline void remove_updater(const Ref<SpicyParticleUpdater>& updater) { updaters.erase(updater); }
 
 		inline const Ref<ParticleData> final_data() const { return particles; }

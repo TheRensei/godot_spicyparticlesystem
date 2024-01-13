@@ -14,14 +14,14 @@ void godot::SpicyParticleGenerator::generate(double dt, const Ref<ParticleData> 
 	for (size_t i = startId; i < endId; i++)
 	{
 		//reset all p_data values
-		p_data->position[i] = Vector3(0,0,0);
-		p_data->rotation[i] = Vector3(0,0,0);
+		p_data->position[i] = Vector3(0, 0, 0);
+		p_data->rotation[i] = Vector3(0, 0, 0);
 		p_data->scale[i] = Vector3(1, 1, 1);
-		p_data->velocity[i] = Vector3(0,0,0);
-		p_data->current_velocity[i] = Vector3(0,0,0);
+		p_data->velocity[i] = Vector3(0, 0, 0);
+		p_data->current_velocity[i] = Vector3(0, 0, 0);
 		p_data->current_scale[i] = Vector3(1, 1, 1);
-		p_data->current_rotation[i] = Vector3(0,0,0);
-		p_data->acceleration[i] = Vector3(0,0,0);
+		p_data->current_rotation[i] = Vector3(0, 0, 0);
+		p_data->acceleration[i] = Vector3(0, 0, 0);
 		p_data->color[i] = Color(1, 1, 1, 1);
 		p_data->current_color[i] = Color(1, 1, 1, 1);
 		p_data->lifetime[i] = 0;
@@ -54,7 +54,7 @@ godot::LifetimeGenerator::LifetimeGenerator()
 
 void godot::LifetimeGenerator::generate(double dt, const Ref<ParticleData> p_data, size_t startId, size_t endId)
 {
-	if(!lifetime_property.is_valid()) return;
+	if (!lifetime_property.is_valid()) return;
 
 	for (size_t i = startId; i < endId; i++)
 	{
@@ -144,7 +144,7 @@ void godot::PositionGenerator::_bind_methods()
 
 void godot::PositionGenerator::generate(double dt, const Ref<ParticleData> p_data, size_t startId, size_t endId)
 {
-	if(!emission_shape.is_valid()) return;
+	if (!emission_shape.is_valid()) return;
 
 	for (size_t i = startId; i < endId; i++)
 	{
@@ -234,7 +234,7 @@ godot::ColorGenerator::ColorGenerator()
 
 void godot::ColorGenerator::generate(double dt, const Ref<ParticleData> p_data, size_t startId, size_t endId)
 {
-	if(!color_property.is_valid()) return;
+	if (!color_property.is_valid()) return;
 
 	for (size_t i = startId; i < endId; i++)
 	{
@@ -329,7 +329,7 @@ godot::SizeGenerator::SizeGenerator()
 
 void godot::SizeGenerator::generate(double dt, const Ref<ParticleData> p_data, size_t startId, size_t endId)
 {
-	if(!size_property.is_valid() && size_multiplier_property.is_valid()) return;
+	if (!size_property.is_valid() && size_multiplier_property.is_valid()) return;
 
 	for (size_t i = startId; i < endId; i++)
 	{
@@ -379,7 +379,7 @@ void godot::SizeGenerator::_get_property_list(List<PropertyInfo>* r_props) const
 {
 	if (size_multiplier_property.is_valid()) {
 		size_multiplier_property->get_property_list(r_props);
-	}	
+	}
 	if (size_property.is_valid()) {
 		size_property->get_property_list(r_props);
 	}
@@ -457,7 +457,7 @@ godot::VelocityGenerator::VelocityGenerator()
 
 void godot::VelocityGenerator::generate(double dt, const Ref<ParticleData> p_data, size_t startId, size_t endId)
 {
-	if(!velocity_property.is_valid()) return;
+	if (!velocity_property.is_valid()) return;
 
 	for (size_t i = startId; i < endId; i++)
 	{
@@ -539,7 +539,7 @@ godot::RotationGenerator::RotationGenerator()
 
 void godot::RotationGenerator::generate(double dt, const Ref<ParticleData> p_data, size_t startId, size_t endId)
 {
-	if(!rotation_property.is_valid()) return;
+	if (!rotation_property.is_valid()) return;
 
 	for (size_t i = startId; i < endId; i++)
 	{
