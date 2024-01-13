@@ -18,14 +18,14 @@ sources = Glob("src/*.cpp")
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "spicy-demo/addons/spicyparticlesystem/gdextension/osx/spicyparticlesystem.{}.{}.framework/spicyparticlesystem.{}.{}".format(
+        "spicy-demo/addons/spicyparticlesystem/gdextension/spicyparticlesystem.{}.{}.framework/spicyparticlesystem.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "spicy-demo/addons/spicyparticlesystem/gdextension/win64/spicyparticlesystem{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "spicy-demo/addons/spicyparticlesystem/gdextension/spicyparticlesystem{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 

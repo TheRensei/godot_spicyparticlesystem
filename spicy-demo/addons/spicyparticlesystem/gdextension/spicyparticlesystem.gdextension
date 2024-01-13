@@ -6,12 +6,12 @@ reloadable = true
 
 [libraries]
 
-macos.debug = "osx/spicyparticlesystem.macos.template_debug.framework"
-macos.release = "osx/spicyparticlesystem.macos.template_release.framework"
-windows.debug.x86_64 = "win64/spicyparticlesystem.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "win64/spicyparticlesystem.windows.template_release.x86_64.dll"
-linux.debug.x86_64 = "linux64/spicyparticlesystem.linux.template_debug.x86_64.so"
-linux.release.x86_64 = "linux64/spicyparticlesystem.linux.template_release.x86_64.so"
+macos.debug = "spicyparticlesystem.macos.template_debug.framework"
+macos.release = "spicyparticlesystem.macos.template_release.framework"
+windows.debug.x86_64 = "spicyparticlesystem.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "spicyparticlesystem.windows.template_release.x86_64.dll"
+linux.debug.x86_64 = "spicyparticlesystem.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "spicyparticlesystem.linux.template_release.x86_64.so"
 
 [icons]
 SpicyParticleGenerator = "res://addons/spicyparticlesystem/icons/GenIcon.svg"

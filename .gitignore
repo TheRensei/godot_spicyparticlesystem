@@ -1,9 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 .sconsign*.dblite
-spicy-demo/addons/spicyparticlesystem/gdextension/linux64/
-spicy-demo/addons/spicyparticlesystem/gdextension/osx/
-spicy-demo/addons/spicyparticlesystem/gdextension/win64/
+spicy-demo/addons/spicyparticlesystem/gdextension/*
 
 # Godot-specific ignores
 .import/
