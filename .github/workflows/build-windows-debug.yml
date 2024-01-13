@@ -1,4 +1,4 @@
-name: Builds
+name: Build Windows Debug
 
 on: workflow_dispatch
 
