@@ -61,7 +61,7 @@ namespace godot
 
 		void set_velocity_over_life_property(const Ref<SpicyVector3Property>& p_velocity_property);
 		Ref<SpicyVector3Property> get_velocity_over_life_property() const;
-	
+
 		void set_radial_velocity_property(const Ref<SpicyFloatProperty>& p_radial_velocity_property);
 		Ref<SpicyFloatProperty> get_radial_velocity_property() const;
 
@@ -107,7 +107,7 @@ namespace godot
 		static void _bind_methods();
 	public:
 		void _update_color(double dt, const Ref<ParticleData> p_data);
-		ColorUpdater() : speed_range(0,1) {};
+		ColorUpdater() : speed_range(0, 1) {};
 		virtual ~ColorUpdater() {}
 
 		virtual void update(double dt, const Ref<ParticleData> p_data) override;
@@ -143,7 +143,7 @@ namespace godot
 		bool _property_can_revert(const StringName& p_name) const;
 		bool _property_get_revert(const StringName& p_name, Variant& r_property) const;
 	};
-	
+
 	class SizeUpdater : public SpicyParticleUpdater {
 		GDCLASS(SizeUpdater, SpicyParticleUpdater);
 	public:
@@ -165,7 +165,7 @@ namespace godot
 		bool _property_can_revert(const StringName& p_name) const;
 		bool _property_get_revert(const StringName& p_name, Variant& r_property) const;
 	};
-	
+
 }
 
 

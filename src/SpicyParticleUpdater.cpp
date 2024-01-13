@@ -83,10 +83,10 @@ void godot::VelocityUpdater::update(double dt, const Ref<ParticleData> p_data)
 	{
 		Vector3 new_velocity = Vector3(0, 0, 0);
 
-		if(velocity_over_life.is_valid())
+		if (velocity_over_life.is_valid())
 			new_velocity += velocity_over_life->get_value(p_data->rng, p_data->normalized_lifetime[i]);
 
-		if(radial_velocity.is_valid())
+		if (radial_velocity.is_valid())
 			new_velocity += (p_data->position[i] - p_data->emitter_transform.origin).normalized() * radial_velocity->get_value(p_data->rng, p_data->normalized_lifetime[i]);
 
 		if (orbital_velocity.is_valid())
@@ -278,7 +278,7 @@ void godot::AccelerationUpdater::update(double dt, const Ref<ParticleData> p_dat
 {
 	unsigned int endId = p_data->count_alive;
 
-	if(!acceleration_property.is_valid()) return;
+	if (!acceleration_property.is_valid()) return;
 
 	for (size_t i = 0; i < endId; ++i)
 	{
@@ -452,7 +452,7 @@ void godot::RotationUpdater::update(double dt, const Ref<ParticleData> p_data)
 {
 	unsigned int endId = p_data->count_alive;
 
-	if(!rotation_property.is_valid()) return;
+	if (!rotation_property.is_valid()) return;
 
 	for (size_t i = 0; i < endId; ++i)
 	{
@@ -539,7 +539,7 @@ void godot::SizeUpdater::update(double dt, const Ref<ParticleData> p_data)
 {
 	unsigned int endId = p_data->count_alive;
 
-	if(!size_property.is_valid()) return;
+	if (!size_property.is_valid()) return;
 
 	for (size_t i = 0; i < endId; ++i)
 	{
@@ -550,7 +550,7 @@ void godot::SizeUpdater::update(double dt, const Ref<ParticleData> p_data)
 void godot::SizeUpdater::set_size_property(const Ref<SpicyVector3Property>& p_size_property)
 {
 	size_property = p_size_property;
-	
+
 	if (size_property.is_null()) {
 		Ref<SpicyVector3Property> size_prop(memnew(SpicyVector3Property));
 		size_property = size_prop;

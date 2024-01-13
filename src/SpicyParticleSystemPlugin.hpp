@@ -42,7 +42,8 @@ namespace godot
 #pragma region EditorPlugin
 
 	class SpicyParticleSystemPlugin : public EditorPlugin
-	{ GDCLASS(SpicyParticleSystemPlugin, EditorPlugin)
+	{
+		GDCLASS(SpicyParticleSystemPlugin, EditorPlugin)
 	private:
 		SpicyParticleSystemNode* system_node = nullptr;
 		Ref<SpicyParticleSystemInspectorPlugin> inspector_plugin;
@@ -61,7 +62,7 @@ namespace godot
 		bool only_selected = true;
 
 		bool move_button_down = false;
-		Vector2 mouse_offset = Vector2(0,0);
+		Vector2 mouse_offset = Vector2(0, 0);
 
 		const Control* view_control = nullptr;
 	private:

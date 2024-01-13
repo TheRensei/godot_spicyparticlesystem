@@ -50,65 +50,65 @@ RID godot::MultiMeshParticleRenderer::get_multimesh() const
 void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p_data, size_t p_id, Transform3D& out_transform)
 {
 	switch (m_alignment) {
-		case ALIGNMENT_LOCAL:
-		{
-			//Should do this by default
-			return;
-		}
-		break;
-		case ALIGNMENT_WORLD:
-		{
-			out_transform.basis = p_data->particle_node->get_global_transform().affine_inverse().basis * out_transform.basis;
-		}
-		break;
-		case ALIGNMENT_SCREEN:
-		{
-			if (m_alignment_target_node != NULL) {
-				Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
-				Basis target_basis = m_alignment_target_node->get_global_basis() * flip_xz;
-
-				out_transform.basis = target_basis * out_transform.basis;
-				out_transform.basis = p_node_basis * out_transform.basis;	
-			}
-		}
-		break;
-		case ALIGNMENT_CAMERA:
-		{
-
-			if (m_alignment_target_node != NULL) {
-				Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
-				Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
-
-				out_transform.basis = target_basis * out_transform.basis;
-				out_transform.basis = p_node_basis * out_transform.basis;
-
-			}
-		}
-		break;
-		case ALIGNMENT_VELOCITY:
-		{
-			Vector3 v = p_data->velocity[p_id] + p_data->current_velocity[p_id] + p_data->acceleration[p_id];
-			v.normalize();
-
+	case ALIGNMENT_LOCAL:
+	{
+		//Should do this by default
+		return;
+	}
+	break;
+	case ALIGNMENT_WORLD:
+	{
+		out_transform.basis = p_data->particle_node->get_global_transform().affine_inverse().basis * out_transform.basis;
+	}
+	break;
+	case ALIGNMENT_SCREEN:
+	{
+		if (m_alignment_target_node != NULL) {
 			Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
+			Basis target_basis = m_alignment_target_node->get_global_basis() * flip_xz;
 
-			if (v.length_squared() > 0.0001 && !v.is_equal_approx(Vector3(0, 1, 0)))
-				out_transform.basis = out_transform.basis.looking_at(v, out_transform.basis.rows[2]) * out_transform.basis;
+			out_transform.basis = target_basis * out_transform.basis;
+			out_transform.basis = p_node_basis * out_transform.basis;
+		}
+	}
+	break;
+	case ALIGNMENT_CAMERA:
+	{
+
+		if (m_alignment_target_node != NULL) {
+			Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
+			Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
+
+			out_transform.basis = target_basis * out_transform.basis;
 			out_transform.basis = p_node_basis * out_transform.basis;
 
 		}
-		break;
-		case ALIGNMENT_LOOK_AT:
-		{
-			if (m_alignment_target_node != NULL) {
-				Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
-				Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
+	}
+	break;
+	case ALIGNMENT_VELOCITY:
+	{
+		Vector3 v = p_data->velocity[p_id] + p_data->current_velocity[p_id] + p_data->acceleration[p_id];
+		v.normalize();
 
-				out_transform.basis = target_basis * out_transform.basis;
-				out_transform.basis = p_node_basis * out_transform.basis;
-			}
+		Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
+
+		if (v.length_squared() > 0.0001 && !v.is_equal_approx(Vector3(0, 1, 0)))
+			out_transform.basis = out_transform.basis.looking_at(v, out_transform.basis.rows[2]) * out_transform.basis;
+		out_transform.basis = p_node_basis * out_transform.basis;
+
+	}
+	break;
+	case ALIGNMENT_LOOK_AT:
+	{
+		if (m_alignment_target_node != NULL) {
+			Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
+			Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
+
+			out_transform.basis = target_basis * out_transform.basis;
+			out_transform.basis = p_node_basis * out_transform.basis;
 		}
-		break;
+	}
+	break;
 	}
 }
 
@@ -144,7 +144,7 @@ void godot::MultiMeshParticleRenderer::destroy()
 
 void godot::MultiMeshParticleRenderer::update()
 {
-	float *ptr = mesh_data.ptrw();
+	float* ptr = mesh_data.ptrw();
 	const Ref<ParticleData> p = m_system->final_data();
 
 	Transform3D t;

@@ -157,7 +157,7 @@ namespace godot
 		//Scale generation
 		void set_size_generator(const Ref<SizeGenerator>& p_size_generator);
 		Ref<SizeGenerator> get_size_generator() const;
-		
+
 		//Rotation generation
 		void set_rotation_generator(const Ref<RotationGenerator>& p_rotation_generator);
 		Ref<RotationGenerator> get_rotation_generator() const;
@@ -198,7 +198,7 @@ namespace godot
 
 		//void set_custom_renderer_data(bool p_custom_renderer_data);
 		//bool get_custom_renderer_data() const;
-		
+
 		void set_max_particle_count(int p_max_particle_count);
 		int get_max_particle_count() const;
 

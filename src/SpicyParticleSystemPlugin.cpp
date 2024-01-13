@@ -171,14 +171,14 @@ void godot::SpicyParticleSystemPlugin::_exit_tree()
 {
 	remove_inspector_plugin(inspector_plugin);
 	on_screen_editor->queue_free();
-	
+
 	//is it necessary?
 	memdelete(on_screen_editor);
 }
 
 void godot::SpicyParticleSystemPlugin::_process(double delta)
 {
-	if(system_node != nullptr && on_screen_editor != nullptr && on_screen_editor->is_visible())
+	if (system_node != nullptr && on_screen_editor != nullptr && on_screen_editor->is_visible())
 	{
 		_update_on_screen_editor();
 
@@ -188,10 +188,10 @@ void godot::SpicyParticleSystemPlugin::_process(double delta)
 			Vector2 mouse_pos = view_control->get_local_mouse_position() + mouse_offset;
 			Vector2 control_size = on_screen_editor->get_size();
 			Vector2 new_pos = mouse_pos;
-			
+
 			new_pos.x = CLAMP(mouse_pos.x, 5, view_size.x - control_size.x - 5);
 			new_pos.y = CLAMP(mouse_pos.y, 5, view_size.y - control_size.y - 5);
-			
+
 			on_screen_editor->set_position(new_pos);
 		}
 	}
@@ -215,7 +215,7 @@ void godot::SpicyParticleSystemPlugin::_create_on_screen_editor()
 	on_screen_editor->set_anchors_preset(Control::PRESET_CENTER_RIGHT);
 	on_screen_editor->set_position(Vector2(-240, 20));
 
-	
+
 	VBoxContainer vbox_parent = VBoxContainer();
 	vbox_parent.set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 	vbox_parent.set_custom_minimum_size(Vector2(220, 50));
@@ -367,9 +367,9 @@ void godot::SpicyParticleSystemPlugin::_forward_3d_draw_over_viewport(Control* v
 	if (viewport_control->has_node("spicy_particle_ose"))
 		return;
 
-	if(on_screen_editor->get_parent() == viewport_control)
+	if (on_screen_editor->get_parent() == viewport_control)
 		return;
-	else if(on_screen_editor->get_parent() == nullptr)
+	else if (on_screen_editor->get_parent() == nullptr)
 	{
 		viewport_control->add_child(on_screen_editor);
 	}

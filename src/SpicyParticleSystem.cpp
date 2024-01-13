@@ -66,7 +66,7 @@ void godot::SpicyParticleEmitter::emit(double dt, const Ref<ParticleData> p_data
 		reset_burst_time = true;
 	}
 
-	for(int i = 0; i < m_bursts.size(); i++)
+	for (int i = 0; i < m_bursts.size(); i++)
 	{
 		Ref<SpicyParticleBurst> b = m_bursts[i];
 
@@ -146,7 +146,7 @@ bool godot::SpicyParticleEmitter::sort_bursts(const Ref<SpicyParticleBurst>& a, 
 
 godot::SpicyParticleEmitter::~SpicyParticleEmitter()
 {
-	if(bursts_emit_state != nullptr)
+	if (bursts_emit_state != nullptr)
 		memdelete_arr(bursts_emit_state);
 }
 
@@ -187,7 +187,7 @@ void godot::SpicyParticleSystem::update(double dt, double current_duration_norma
 	particles->current_duration_normalized = current_duration_normalized;
 	particles->emitter_transform = node_transform;
 
-	if (is_emitting) 
+	if (is_emitting)
 	{
 		for (auto& emitter : emitters)
 		{
@@ -211,7 +211,7 @@ void godot::SpicyParticleSystem::reset()
 	}
 
 	//kill all alive particles
-	while(particles->count_alive > 0)
+	while (particles->count_alive > 0)
 	{
 		particles->kill(0);
 	}

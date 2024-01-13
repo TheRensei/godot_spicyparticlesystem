@@ -103,7 +103,7 @@ void godot::ParticleData::get_transform(size_t id, Transform3D& p_transform) con
 	Vector3 radians(Math::deg_to_rad(p_euler_degrees.x), Math::deg_to_rad(p_euler_degrees.y), Math::deg_to_rad(p_euler_degrees.z));
 
 	Quaternion q = Quaternion(radians);
-	
+
 	p_transform.scale(scale[id] * current_scale[id]);
 	p_transform.basis.rotate(q);
 	p_transform.origin = position[id];

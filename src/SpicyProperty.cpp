@@ -170,7 +170,7 @@ void godot::SpicyFloatProperty::set_available_types(BitField<SpicyFloatType> p_t
 
 	type_names = "";
 
-	if(display_prop_types & SPICY_FLOAT_TYPE_UNIFORM)
+	if (display_prop_types & SPICY_FLOAT_TYPE_UNIFORM)
 		type_names += "Uniform:1,";
 	if (display_prop_types & SPICY_FLOAT_TYPE_RANDOM)
 		type_names += "Random:2,";
@@ -222,20 +222,20 @@ void godot::SpicyFloatProperty::set_default_random(const Vector2& p_random)
 
 bool godot::SpicyFloatProperty::get_property_list(List<PropertyInfo>* p_list, bool show_type_choice) const
 {
-	if(show_type_choice)
-		p_list->push_back(PropertyInfo(Variant::INT, prop_type_str, PROPERTY_HINT_ENUM,  (StringName)type_names));
+	if (show_type_choice)
+		p_list->push_back(PropertyInfo(Variant::INT, prop_type_str, PROPERTY_HINT_ENUM, (StringName)type_names));
 
 	switch (prop_type)
 	{
-		case SPICY_FLOAT_TYPE_UNIFORM:
-				p_list->push_back(PropertyInfo(Variant::FLOAT, prop_name_str));
-			break;
-		case SPICY_FLOAT_TYPE_RANDOM:
-				p_list->push_back(PropertyInfo(Variant::VECTOR2, prop_name_str));
-			break;
-		case SPICY_FLOAT_TYPE_CURVE:
-				p_list->push_back(PropertyInfo(Variant::OBJECT, prop_name_str, PROPERTY_HINT_RESOURCE_TYPE, "Curve"));
-			break;
+	case SPICY_FLOAT_TYPE_UNIFORM:
+		p_list->push_back(PropertyInfo(Variant::FLOAT, prop_name_str));
+		break;
+	case SPICY_FLOAT_TYPE_RANDOM:
+		p_list->push_back(PropertyInfo(Variant::VECTOR2, prop_name_str));
+		break;
+	case SPICY_FLOAT_TYPE_CURVE:
+		p_list->push_back(PropertyInfo(Variant::OBJECT, prop_name_str, PROPERTY_HINT_RESOURCE_TYPE, "Curve"));
+		break;
 	}
 
 	return true;
@@ -243,7 +243,7 @@ bool godot::SpicyFloatProperty::get_property_list(List<PropertyInfo>* p_list, bo
 
 bool godot::SpicyFloatProperty::get_property(const StringName& p_property, Variant& r_value) const
 {
-	if(p_property == prop_type_str)
+	if (p_property == prop_type_str)
 	{
 		r_value = get_prop_type();
 		return true;
@@ -251,27 +251,27 @@ bool godot::SpicyFloatProperty::get_property(const StringName& p_property, Varia
 
 	switch (prop_type)
 	{
-		case SPICY_FLOAT_TYPE_UNIFORM:
-			if (p_property == prop_name_str)
-			{
-				r_value = uniform;
-				return true;
-			}
-			break;
-		case SPICY_FLOAT_TYPE_RANDOM:
-			if (p_property == prop_name_str)
-			{
-				r_value = random;
-				return true;
-			};
-			break;
-		case SPICY_FLOAT_TYPE_CURVE:
-			if (p_property == prop_name_str)
-			{
-				r_value = curve;
-				return true;
-			}
-			break;
+	case SPICY_FLOAT_TYPE_UNIFORM:
+		if (p_property == prop_name_str)
+		{
+			r_value = uniform;
+			return true;
+		}
+		break;
+	case SPICY_FLOAT_TYPE_RANDOM:
+		if (p_property == prop_name_str)
+		{
+			r_value = random;
+			return true;
+		};
+		break;
+	case SPICY_FLOAT_TYPE_CURVE:
+		if (p_property == prop_name_str)
+		{
+			r_value = curve;
+			return true;
+		}
+		break;
 	}
 	return false;
 }
@@ -347,7 +347,7 @@ bool godot::SpicyFloatProperty::get_property_revert(const StringName& p_property
 {
 	if (p_property == prop_type_str)
 	{
-		r_value = this->has_meta("prop_type") ? this->get_meta("prop_type") : SPICY_FLOAT_TYPE_UNIFORM;
+		r_value = this->has_meta("prop_type") ? this->get_meta("prop_type") : Variant(SPICY_FLOAT_TYPE_UNIFORM);
 		return true;
 	}
 
@@ -356,14 +356,14 @@ bool godot::SpicyFloatProperty::get_property_revert(const StringName& p_property
 	case SPICY_FLOAT_TYPE_UNIFORM:
 		if (p_property == prop_name_str)
 		{
-			r_value = this->has_meta("uniform") ? this->get_meta("uniform") : 0;
+			r_value = this->has_meta("uniform") ? this->get_meta("uniform") : Variant(0);
 			return true;
 		}
 		break;
 	case SPICY_FLOAT_TYPE_RANDOM:
 		if (p_property == prop_name_str)
 		{
-			r_value = this->has_meta("random") ? this->get_meta("random") : Vector2(0, 1);
+			r_value = this->has_meta("random") ? this->get_meta("random") : Variant((Vector2(0, 1));
 			return true;
 		};
 		break;
@@ -401,7 +401,7 @@ Vector2 godot::SpicyFloatProperty::get_random() const
 }
 
 void godot::SpicyFloatProperty::set_curve(const Ref<Curve>& p_curve)
-{	
+{
 	set_prop_type(SPICY_FLOAT_TYPE_CURVE);
 	curve = p_curve;
 }
@@ -579,7 +579,7 @@ bool godot::SpicyVector3Property::get_property_list(List<PropertyInfo>* p_list, 
 		break;
 	case SPICY_VECTOR_TYPE_CURVE:
 		p_list->push_back(PropertyInfo(Variant::OBJECT, prop_name_str, PROPERTY_HINT_RESOURCE_TYPE, "Curve"));
-		break;	
+		break;
 	case SPICY_VECTOR_TYPE_CURVE_XYZ:
 		p_list->push_back(PropertyInfo(Variant::OBJECT, prop_name_curve_x_str, PROPERTY_HINT_RESOURCE_TYPE, "Curve"));
 		p_list->push_back(PropertyInfo(Variant::OBJECT, prop_name_curve_y_str, PROPERTY_HINT_RESOURCE_TYPE, "Curve"));
@@ -756,7 +756,7 @@ bool godot::SpicyVector3Property::get_property_revert(const StringName& p_proper
 {
 	if (p_property == prop_type_str)
 	{
-		r_value = this->has_meta("prop_type") ? this->get_meta("prop_type") : SPICY_VECTOR_TYPE_UNIFORM;
+		r_value = this->has_meta("prop_type") ? this->get_meta("prop_type") : Variant(SPICY_VECTOR_TYPE_UNIFORM);
 		return true;
 	}
 
@@ -765,19 +765,19 @@ bool godot::SpicyVector3Property::get_property_revert(const StringName& p_proper
 	case SPICY_VECTOR_TYPE_UNIFORM:
 		if (p_property == prop_name_str)
 		{
-			r_value = this->has_meta("uniform") ? this->get_meta("uniform") : Vector3(0,0,0);
+			r_value = this->has_meta("uniform") ? this->get_meta("uniform") : Variant(Vector3(0, 0, 0));
 			return true;
 		}
 		break;
 	case SPICY_VECTOR_TYPE_RANDOM:
 		if (p_property == prop_name_randmin_str)
 		{
-			r_value = this->has_meta("random_min") ? this->get_meta("random_min") : Vector3(0, 0, 0);
+			r_value = this->has_meta("random_min") ? this->get_meta("random_min") : Variant(Vector3(0, 0, 0));
 			return true;
 		}
 		else if (p_property == prop_name_randmax_str)
 		{
-			r_value = this->has_meta("random_max") ? this->get_meta("random_max") : Vector3(1, 1, 1);
+			r_value = this->has_meta("random_max") ? this->get_meta("random_max") : Variant(Vector3(1, 1, 1));
 			return true;
 		};
 		break;
@@ -1099,7 +1099,7 @@ bool godot::SpicyColorProperty::get_property_revert(const StringName& p_property
 {
 	if (p_property == prop_type_str)
 	{
-		r_value = this->has_meta("prop_type") ? this->get_meta("prop_type") : SPICY_COLOR_TYPE_UNIFORM;
+		r_value = this->has_meta("prop_type") ? this->get_meta("prop_type") : Variant(SPICY_COLOR_TYPE_UNIFORM);
 		return true;
 	}
 
@@ -1108,7 +1108,7 @@ bool godot::SpicyColorProperty::get_property_revert(const StringName& p_property
 	case SPICY_COLOR_TYPE_UNIFORM:
 		if (p_property == prop_name_str)
 		{
-			r_value = this->has_meta("uniform") ? this->get_meta("uniform") : 0;
+			r_value = this->has_meta("uniform") ? this->get_meta("uniform") : Variant(0);
 			return true;
 		}
 		break;
