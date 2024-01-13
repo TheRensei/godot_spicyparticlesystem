@@ -53,6 +53,7 @@ jobs:
             platform: linux
             arch: x86_64
 
+
     steps:
 
       - name: Checkout project
@@ -121,3 +122,4 @@ jobs:
           omitBodyDuringUpdate: true
           token: ${{ secrets.GITHUB_TOKEN }}
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+
