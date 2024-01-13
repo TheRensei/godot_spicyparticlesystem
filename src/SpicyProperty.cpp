@@ -363,7 +363,7 @@ bool godot::SpicyFloatProperty::get_property_revert(const StringName& p_property
 	case SPICY_FLOAT_TYPE_RANDOM:
 		if (p_property == prop_name_str)
 		{
-			r_value = this->has_meta("random") ? this->get_meta("random") : Variant((Vector2(0, 1));
+			r_value = this->has_meta("random") ? this->get_meta("random") : Variant(Vector2(0, 1));
 			return true;
 		};
 		break;
