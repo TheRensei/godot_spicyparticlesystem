@@ -54,7 +54,6 @@ namespace godot {
 		virtual ~MultiMeshParticleRenderer();
 
 		void set_mesh(const Ref<Mesh>& p_mesh);
-		Ref<Mesh> get_mesh() const;
 
 		RID get_multimesh() const;
 
