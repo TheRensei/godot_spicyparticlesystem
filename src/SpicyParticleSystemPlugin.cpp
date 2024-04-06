@@ -17,13 +17,15 @@
 #include <godot_cpp/classes/editor_interface.hpp>
 #include <godot_cpp/variant/rect2.hpp>
 
+#include <godot_cpp/classes/time.hpp>
+
 
 using namespace godot;
 
 
 ////////////////////////////////////////////////////////////////////////
 
-void godot::SpicyParticleSystemInspectorPlugin::_control_ref_added(Control* red)
+void godot::SpicyParticleSystemModuleInspectorPlugin::_control_ref_added(Control* red)
 {
 	Node* parent_control = red->get_parent();
 	parent_control = parent_control->get_child(0);
@@ -54,6 +56,31 @@ void godot::SpicyParticleSystemInspectorPlugin::_control_ref_added(Control* red)
 	}
 }
 
+godot::SpicyParticleSystemModuleInspectorPlugin::SpicyParticleSystemModuleInspectorPlugin()
+{
+}
+
+godot::SpicyParticleSystemModuleInspectorPlugin::~SpicyParticleSystemModuleInspectorPlugin()
+{
+}
+
+bool godot::SpicyParticleSystemModuleInspectorPlugin::_can_handle(Object* p_object) const
+{
+	return Object::cast_to<SpicyParticleGenerator>(p_object) != nullptr || Object::cast_to<SpicyParticleUpdater>(p_object);
+}
+
+void godot::SpicyParticleSystemModuleInspectorPlugin::_parse_end(Object* object)
+{
+	Control control_ref = Control();
+	control_ref.set_name("CustomControl");
+	add_custom_control(&control_ref);
+	control_ref.connect("tree_entered", callable_mp(this, &SpicyParticleSystemModuleInspectorPlugin::_control_ref_added).bind(&control_ref));
+	control_ref.set_visible(false);
+}
+
+////////////////////////////////////////////////////////////////////////
+
+
 godot::SpicyParticleSystemInspectorPlugin::SpicyParticleSystemInspectorPlugin()
 {
 }
@@ -64,17 +91,124 @@ godot::SpicyParticleSystemInspectorPlugin::~SpicyParticleSystemInspectorPlugin()
 
 bool godot::SpicyParticleSystemInspectorPlugin::_can_handle(Object* p_object) const
 {
-	return Object::cast_to<SpicyParticleGenerator>(p_object) != nullptr || Object::cast_to<SpicyParticleUpdater>(p_object);
+	return Object::cast_to<SpicyParticleSystemNode>(p_object);
 }
 
-void godot::SpicyParticleSystemInspectorPlugin::_parse_end(Object* object)
+bool godot::SpicyParticleSystemInspectorPlugin::_parse_property(Object* object, Variant::Type type, const String& name, PropertyHint hint_type, const String& hint_string, BitField<PropertyUsageFlags> usage_flags, bool wide)
 {
-	Control control_ref = Control();
-	control_ref.set_name("CustomControl");
-	add_custom_control(&control_ref);
-	control_ref.connect("tree_entered", callable_mp(this, &SpicyParticleSystemInspectorPlugin::_control_ref_added).bind(&control_ref));
-	control_ref.set_visible(false);
+	if (name == "seed")
+	{
+		//Button* button = memnew(Button);
+		////button->set_text("Randomize");
+		//button->set_theme_type_variation("InspectorActionButton");
+		//button->set_h_size_flags(Control::SizeFlags::SIZE_SHRINK_END);
+		//button->set_button_icon(base_ref->get_theme_icon("RandomNumberGenerator", "EditorIcons"));
+		//add_custom_control(button);
+
+		//seed = Time::get_singleton()->get_ticks_msec() + get_name().to_int();
+
+		EditorPropertyRandomInteger* editor = memnew(EditorPropertyRandomInteger);
+		editor->set_base_ref(base_ref);
+		editor->setup(0, 999999, 1, false, false, false, "");
+
+		add_property_editor(name, editor);
+
+		return true;
+	}
+	return false;
 }
+
+void godot::SpicyParticleSystemInspectorPlugin::_parse_group(Object* object, const String& group)
+{
+	//if (group == "Generators")
+	//{
+	//	//Could be used instead of having the empty resource slots
+	//	Button* button = memnew(Button);
+	//	button->set_text("Add Generator");
+	//	button->set_theme_type_variation("InspectorActionButton");
+	//	button->set_h_size_flags(Control::SizeFlags::SIZE_SHRINK_CENTER);
+	//	button->set_button_icon(base_ref->get_theme_icon("Add", "EditorIcons"));
+	//	add_custom_control(button);
+	//	//button->connect(SNAME("pressed"), callable_mp(this, &EditorInspector::_show_add_meta_dialog));
+	//}
+}
+
+
+////////////////////////////////////////////////////////////////////////
+
+
+void godot::EditorPropertyRandomInteger::_randomize_integer()
+{
+	int64_t seed = UtilityFunctions::randi_range(0, 999999);
+
+	emit_changed(get_edited_property(), seed);
+}
+
+void godot::EditorPropertyRandomInteger::_value_changed(int64_t p_val)
+{
+	if (setting) {
+		return;
+	}
+	emit_changed(get_edited_property(), p_val);
+}
+
+void godot::EditorPropertyRandomInteger::_set_read_only(bool p_read_only)
+{
+	spin->set_read_only(p_read_only);
+}
+
+void godot::EditorPropertyRandomInteger::_bind_methods()
+{
+}
+
+void godot::EditorPropertyRandomInteger::_update_property()
+{
+	int64_t val = get_edited_object()->get(get_edited_property());
+	setting = true;
+	spin->set_value(val);
+	setting = false;
+}
+
+void godot::EditorPropertyRandomInteger::setup(int64_t p_min, int64_t p_max, int64_t p_step, bool p_hide_slider, bool p_allow_greater, bool p_allow_lesser, const String& p_suffix)
+{
+	spin->set_min(p_min);
+	spin->set_max(p_max);
+	spin->set_step(p_step);
+	spin->set_hide_slider(p_hide_slider);
+	spin->set_allow_greater(p_allow_greater);
+	spin->set_allow_lesser(p_allow_lesser);
+	spin->set_suffix(p_suffix);
+
+	spin->connect("value_changed", callable_mp(this, &EditorPropertyRandomInteger::_value_changed));
+
+	button->set_button_icon(base_ref->get_theme_icon("RandomNumberGenerator", "EditorIcons"));
+	button->connect("pressed", callable_mp(this, &EditorPropertyRandomInteger::_randomize_integer));
+
+}
+
+godot::EditorPropertyRandomInteger::EditorPropertyRandomInteger()
+{
+	HBoxContainer container = HBoxContainer();
+	container.set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	add_child(&container);
+
+	spin = memnew(EditorSpinSlider);
+	spin->set_flat(true);
+	spin->set_h_size_flags(Control::SizeFlags::SIZE_EXPAND_FILL);
+	container.add_child(spin);
+	add_focusable(spin);
+
+	button = memnew(Button);
+	button->set_theme_type_variation("InspectorActionButton");
+	button->set_h_size_flags(Control::SizeFlags::SIZE_SHRINK_END);
+	button->set_icon_alignment(HorizontalAlignment::HORIZONTAL_ALIGNMENT_CENTER);
+
+	container.add_child(button);
+
+	add_focusable(button);
+
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -160,6 +294,10 @@ godot::SpicyParticleSystemPlugin::~SpicyParticleSystemPlugin()
 
 void godot::SpicyParticleSystemPlugin::_enter_tree()
 {
+	module_inspector_plugin.instantiate();
+	module_inspector_plugin->set_base_ref(get_editor_interface()->get_base_control());
+	add_inspector_plugin(module_inspector_plugin);
+
 	inspector_plugin.instantiate();
 	inspector_plugin->set_base_ref(get_editor_interface()->get_base_control());
 	add_inspector_plugin(inspector_plugin);
@@ -169,6 +307,7 @@ void godot::SpicyParticleSystemPlugin::_enter_tree()
 
 void godot::SpicyParticleSystemPlugin::_exit_tree()
 {
+	remove_inspector_plugin(module_inspector_plugin);
 	remove_inspector_plugin(inspector_plugin);
 	on_screen_editor->queue_free();
 
