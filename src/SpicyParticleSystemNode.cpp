@@ -156,6 +156,7 @@ double frame_remainder = 0;
 
 void godot::SpicyParticleSystemNode::_internal_process(double delta)
 {
+
 	if (is_paused && !is_playing || is_stopped || !is_visible_in_tree() || !is_inside_tree())
 	{
 		frame_remainder = 0;
@@ -945,7 +946,8 @@ void godot::SpicyParticleSystemNode::set_max_particle_count(int p_max_particle_c
 	m_particle_system->set_max_particle_count(max_particles, rng);
 	m_renderer->resize_buffer();
 
-	stop();
+	if(is_inside_tree())
+		stop();
 }
 
 int godot::SpicyParticleSystemNode::get_max_particle_count() const
