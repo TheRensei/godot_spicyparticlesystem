@@ -240,7 +240,7 @@ void godot::SpicyParticleSystemNode::_notification(int p_what)
 
 	case NOTIFICATION_TRANSFORM_CHANGED:
 	{
-		if (world_space)
+		if (world_space && is_inside_tree())
 			node_transform = get_global_transform();
 		else
 			node_transform = Transform3D();
