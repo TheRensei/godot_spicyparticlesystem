@@ -109,7 +109,7 @@ bool godot::SpicyParticleSystemInspectorPlugin::_parse_property(Object* object, 
 
 		EditorPropertyRandomInteger* editor = memnew(EditorPropertyRandomInteger);
 		editor->set_base_ref(base_ref);
-		editor->setup(0, 999999, 1, false, false, false, "");
+		editor->setup(0, 9999999, 1, false, false, false, "");
 
 		add_property_editor(name, editor);
 
@@ -139,7 +139,7 @@ void godot::SpicyParticleSystemInspectorPlugin::_parse_group(Object* object, con
 
 void godot::EditorPropertyRandomInteger::_randomize_integer()
 {
-	int64_t seed = UtilityFunctions::randi_range(0, 999999);
+	int64_t seed = UtilityFunctions::randi_range(0, 9999999);
 
 	emit_changed(get_edited_property(), seed);
 }

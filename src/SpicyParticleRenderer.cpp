@@ -52,13 +52,16 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 	switch (m_alignment) {
 	case ALIGNMENT_LOCAL:
 	{
-		//Should do this by default
 		return;
 	}
 	break;
 	case ALIGNMENT_WORLD:
 	{
-		out_transform.basis = p_data->particle_node->get_global_transform().affine_inverse().basis * out_transform.basis;
+		Basis world = p_data->particle_node->get_global_transform().affine_inverse().basis;
+		out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
+		out_transform.basis = world * out_transform.basis;
+
+		//out_transform.basis = p_data->particle_node->get_global_transform().affine_inverse().basis * out_transform.basis;
 	}
 	break;
 	case ALIGNMENT_SCREEN:
@@ -68,6 +71,7 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 			Basis target_basis = m_alignment_target_node->get_global_basis() * flip_xz;
 
 			out_transform.basis = target_basis * out_transform.basis;
+			out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
 			out_transform.basis = p_node_basis * out_transform.basis;
 		}
 	}
@@ -79,6 +83,7 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 			Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
 			Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
 
+			out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
 			out_transform.basis = target_basis * out_transform.basis;
 			out_transform.basis = p_node_basis * out_transform.basis;
 
@@ -99,11 +104,13 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 	}
 	break;
 	case ALIGNMENT_LOOK_AT:
-	{
+	{	
 		if (m_alignment_target_node != NULL) {
+
 			Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
 			Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
 
+			out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
 			out_transform.basis = target_basis * out_transform.basis;
 			out_transform.basis = p_node_basis * out_transform.basis;
 		}
