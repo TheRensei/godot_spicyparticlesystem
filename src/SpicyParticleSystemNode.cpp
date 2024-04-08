@@ -565,6 +565,11 @@ bool godot::SpicyParticleSystemNode::get_looping() const
 void godot::SpicyParticleSystemNode::set_world_space(bool p_world_space)
 {
 	world_space = p_world_space;
+
+	if (world_space && is_inside_tree())
+		node_transform = get_global_transform();
+	else
+		node_transform = Transform3D();
 }
 
 bool godot::SpicyParticleSystemNode::get_world_space() const
