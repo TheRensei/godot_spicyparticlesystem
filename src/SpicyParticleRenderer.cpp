@@ -37,11 +37,6 @@ void godot::MultiMeshParticleRenderer::set_mesh(const Ref<Mesh>& p_mesh)
 	RenderingServer::get_singleton()->multimesh_set_mesh(multimesh, meshRID);
 }
 
-Ref<Mesh> godot::MultiMeshParticleRenderer::get_mesh() const
-{
-	return RenderingServer::get_singleton()->multimesh_get_mesh(multimesh);
-}
-
 RID godot::MultiMeshParticleRenderer::get_multimesh() const
 {
 	return multimesh;
