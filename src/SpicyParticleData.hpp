@@ -27,6 +27,7 @@ namespace godot
 		Vector3* current_scale;
 		Vector3* current_rotation;
 		Vector3* acceleration;
+		Vector4* custom_data;
 		Color* current_color;
 		Color* color;
 		float* lifetime;

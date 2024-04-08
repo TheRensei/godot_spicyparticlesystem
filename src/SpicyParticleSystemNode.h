@@ -51,6 +51,7 @@ namespace godot
 		Ref<AccelerationUpdater> m_acceleration_updater;
 		Ref<RotationUpdater> m_rotation_updater;
 		Ref<SizeUpdater> m_size_updater;
+		Ref<CustomDataUpdater> m_custom_data_updater;
 
 		Ref<RandomNumberGenerator> rng;
 		uint64_t rng_state;
@@ -79,9 +80,9 @@ namespace godot
 		Ref<Mesh> mesh;
 		MultiMeshParticleRenderer::Alignment m_particle_alignment;
 		NodePath m_alignment_target;
+		bool use_custom_data;
 
 		Transform3D node_transform;
-		//bool m_custom_renderer_data = false;
 	protected:
 		static void _bind_methods();
 		void _validate_property(PropertyInfo& property) const;
@@ -184,7 +185,10 @@ namespace godot
 
 		//Scale updater
 		void set_size_updater(const Ref<SizeUpdater>& p_size_updater);
-		Ref<SizeUpdater> get_size_updater() const;
+		Ref<SizeUpdater> get_size_updater() const;		
+		
+		void set_custom_data_updater(const Ref<CustomDataUpdater>& p_custom_data_updater);
+		Ref<CustomDataUpdater> get_custom_data_updater() const;
 
 		// Render properties
 		void set_mesh(const Ref<Mesh>& p_mesh);
@@ -196,8 +200,8 @@ namespace godot
 		void set_alignment_target(const NodePath& p_path);
 		NodePath get_alignment_target() const;
 
-		//void set_custom_renderer_data(bool p_custom_renderer_data);
-		//bool get_custom_renderer_data() const;
+		void set_use_custom_data(bool p_use_custom_data);
+		bool get_use_custom_data() const;
 
 		void set_max_particle_count(int p_max_particle_count);
 		int get_max_particle_count() const;

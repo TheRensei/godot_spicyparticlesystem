@@ -188,11 +188,16 @@ void godot::MultiMeshParticleRenderer::update()
 		ptr[14] = c.b;
 		ptr[15] = c.a;
 
-		float rot = p->rotation[i].z + p->current_rotation[i].z; //that should be calculated before //optimize
-		ptr[16] = Math::deg_to_rad(rot);
-		ptr[17] = p->normalized_lifetime[i];
-		ptr[18] = ptr[17];
-		ptr[19] = 0;
+		//float rot = p->rotation[i].z + p->current_rotation[i].z; //that should be calculated before //optimize
+		//ptr[16] = Math::deg_to_rad(rot);
+		//ptr[17] = p->normalized_lifetime[i];
+		//ptr[18] = ptr[17];
+		//ptr[19] = 0;
+
+		ptr[16] = p->custom_data[i].x;
+		ptr[17] = p->custom_data[i].y;
+		ptr[18] = p->custom_data[i].z;
+		ptr[19] = p->custom_data[i].w;
 
 		ptr += mesh_data_size;
 	}

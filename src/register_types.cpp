@@ -35,6 +35,7 @@ void initialize_spicyparticlesystem_module(ModuleInitializationLevel p_level) {
 		ClassDB::register_class<AccelerationUpdater>();
 		ClassDB::register_class<RotationUpdater>();
 		ClassDB::register_class<SizeUpdater>();
+		ClassDB::register_class<CustomDataUpdater>();
 
 		ClassDB::register_class<SpicyFloatProperty>();
 		ClassDB::register_class<SpicyVector3Property>();

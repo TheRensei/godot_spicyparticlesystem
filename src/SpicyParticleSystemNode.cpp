@@ -73,6 +73,8 @@ void godot::SpicyParticleSystemNode::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_rotation_updater"), &SpicyParticleSystemNode::get_rotation_updater);
 	ClassDB::bind_method(D_METHOD("set_size_updater", "p_size_updater"), &SpicyParticleSystemNode::set_size_updater);
 	ClassDB::bind_method(D_METHOD("get_size_updater"), &SpicyParticleSystemNode::get_size_updater);
+	ClassDB::bind_method(D_METHOD("set_custom_data_updater", "p_custom_data_updater"), &SpicyParticleSystemNode::set_custom_data_updater);
+	ClassDB::bind_method(D_METHOD("get_custom_data_updater"), &SpicyParticleSystemNode::get_custom_data_updater);
 
 	ClassDB::bind_method(D_METHOD("set_mesh", "p_mesh"), &SpicyParticleSystemNode::set_mesh);
 	ClassDB::bind_method(D_METHOD("get_mesh"), &SpicyParticleSystemNode::get_mesh);
@@ -80,6 +82,8 @@ void godot::SpicyParticleSystemNode::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_particle_alignment"), &SpicyParticleSystemNode::get_particle_alignment);
 	ClassDB::bind_method(D_METHOD("set_alignment_target", "p_alignment_target"), &SpicyParticleSystemNode::set_alignment_target);
 	ClassDB::bind_method(D_METHOD("get_alignment_target"), &SpicyParticleSystemNode::get_alignment_target);
+	ClassDB::bind_method(D_METHOD("set_use_custom_data", "p_use_custom_data"), &SpicyParticleSystemNode::set_use_custom_data);
+	ClassDB::bind_method(D_METHOD("get_use_custom_data"), &SpicyParticleSystemNode::get_use_custom_data);
 	//ClassDB::bind_method(D_METHOD("set_custom_renderer_data", "p_custom_renderer_data"), &SpicyParticleSystemNode::set_custom_renderer_data);
 	//ClassDB::bind_method(D_METHOD("get_custom_renderer_data"), &SpicyParticleSystemNode::get_custom_renderer_data);
 
@@ -115,6 +119,8 @@ void godot::SpicyParticleSystemNode::_bind_methods()
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::INT, "particle_alignment", PROPERTY_HINT_ENUM, "Local,World,Screen,Camera,Velocity,Look At"), "set_particle_alignment", "get_particle_alignment");
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::NODE_PATH, "alignment_target", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node3D"), "set_alignment_target", "get_alignment_target");
+	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::BOOL, "use_custom_data"), "set_use_custom_data", "get_use_custom_data");
+	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::OBJECT, "custom_data_updater", PROPERTY_HINT_RESOURCE_TYPE, "CustomDataUpdater"), "set_custom_data_updater", "get_custom_data_updater");
 	//ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::BOOL, "custom_renderer_data"), "set_custom_renderer_data", "get_custom_renderer_data");
 
 	ClassDB::add_property_group("SpicyParticleSystemNode", "Debug", "");
@@ -134,6 +140,7 @@ randomize_seed(true),
 seed(0),
 world_space(false),
 play_on_start(true),
+use_custom_data(false),
 emit_rate(8),
 emit_rate_over_distance(0),
 duration(1.0),
@@ -203,6 +210,11 @@ void godot::SpicyParticleSystemNode::_validate_property(PropertyInfo& p_property
 	{
 		p_property.usage = PROPERTY_USAGE_NONE;
 	}
+
+	if (p_property.name == (String)"custom_data_updater" && !use_custom_data)
+	{
+		p_property.usage = PROPERTY_USAGE_NONE;
+	}
 }
 
 void godot::SpicyParticleSystemNode::_update_null_properties()
@@ -217,6 +229,12 @@ void godot::SpicyParticleSystemNode::_update_null_properties()
 		Ref<PositionGenerator> position_generator(memnew(PositionGenerator));
 		position_generator->set_emission_shape(shape);
 		set_position_generator(position_generator);
+	}
+
+	if (m_custom_data_updater.is_null())
+	{
+		Ref<CustomDataUpdater> custom_data_updater(memnew(CustomDataUpdater));
+		set_custom_data_updater(custom_data_updater);
 	}
 }
 
@@ -428,6 +446,21 @@ void godot::SpicyParticleSystemNode::set_alignment_target(const NodePath& p_path
 NodePath godot::SpicyParticleSystemNode::get_alignment_target() const
 {
 	return m_alignment_target;
+}
+
+void godot::SpicyParticleSystemNode::set_use_custom_data(bool p_use_custom_data)
+{
+	use_custom_data = p_use_custom_data;
+
+	if(m_custom_data_updater.is_valid())
+		m_custom_data_updater->set_use_builtin_data(!use_custom_data);
+
+	notify_property_list_changed();
+}
+
+bool godot::SpicyParticleSystemNode::get_use_custom_data() const
+{
+	return use_custom_data;
 }
 
 void godot::SpicyParticleSystemNode::emit_burst(int count)
@@ -934,6 +967,25 @@ void godot::SpicyParticleSystemNode::set_size_updater(const Ref<SizeUpdater>& p_
 Ref<SizeUpdater> godot::SpicyParticleSystemNode::get_size_updater() const
 {
 	return m_size_updater;
+}
+
+void godot::SpicyParticleSystemNode::set_custom_data_updater(const Ref<CustomDataUpdater>& p_custom_data_updater)
+{
+	m_particle_system->remove_updater(m_custom_data_updater);
+	m_custom_data_updater = p_custom_data_updater;
+
+	if (m_custom_data_updater.is_valid())
+	{
+		m_particle_system->add_updater(m_custom_data_updater);
+		m_custom_data_updater->set_use_builtin_data(!use_custom_data);
+	}
+
+	_update_null_properties();
+}
+
+Ref<CustomDataUpdater> godot::SpicyParticleSystemNode::get_custom_data_updater() const
+{
+	return m_custom_data_updater;
 }
 
 void godot::SpicyParticleSystemNode::set_max_particle_count(int p_max_particle_count)

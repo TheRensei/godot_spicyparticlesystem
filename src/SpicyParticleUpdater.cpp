@@ -559,6 +559,7 @@ void godot::SizeUpdater::set_size_property(const Ref<SpicyVector3Property>& p_si
 		size_prop->set_default_uniform(Vector3(1, 1, 1));
 		size_prop->set_default_type(SpicyVector3Property::SpicyVector3Type::SPICY_VECTOR_TYPE_CURVE);
 	}
+
 }
 
 Ref<SpicyVector3Property> godot::SizeUpdater::get_size_property() const
@@ -603,4 +604,270 @@ bool godot::SizeUpdater::_property_get_revert(const StringName& p_name, Variant&
 		return size_property->get_property_revert(p_name, r_property);
 	}
 	return false;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void godot::CustomDataUpdater::_bind_methods()
+{
+	ClassDB::bind_method(D_METHOD("set_custom_data_property_x", "custom_data_property_x"), &CustomDataUpdater::set_custom_data_property_x);
+	ClassDB::bind_method(D_METHOD("get_custom_data_property_x"), &CustomDataUpdater::get_custom_data_property_x);
+	ClassDB::bind_method(D_METHOD("set_custom_data_property_y", "custom_data_property_y"), &CustomDataUpdater::set_custom_data_property_y);
+	ClassDB::bind_method(D_METHOD("get_custom_data_property_y"), &CustomDataUpdater::get_custom_data_property_y);
+	ClassDB::bind_method(D_METHOD("set_custom_data_property_z", "custom_data_property_z"), &CustomDataUpdater::set_custom_data_property_z);
+	ClassDB::bind_method(D_METHOD("get_custom_data_property_z"), &CustomDataUpdater::get_custom_data_property_z);
+	ClassDB::bind_method(D_METHOD("set_custom_data_property_w", "custom_data_property_w"), &CustomDataUpdater::set_custom_data_property_w);
+	ClassDB::bind_method(D_METHOD("get_custom_data_property_w"), &CustomDataUpdater::get_custom_data_property_w);
+	ClassDB::bind_method(D_METHOD("set_use_builtin_data", "use_builtin_data"), &CustomDataUpdater::set_use_builtin_data);
+	ClassDB::bind_method(D_METHOD("get_use_builtin_data"), &CustomDataUpdater::get_use_builtin_data);
+
+	//ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_builtin_data"), "set_use_builtin_data", "get_use_builtin_data");
+}
+
+godot::CustomDataUpdater::CustomDataUpdater() : use_builtin_data(true)
+{
+	Ref<SpicyFloatProperty> custom_data_x(memnew(SpicyFloatProperty));
+	custom_data_property_x = custom_data_x;
+	custom_data_x->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+	custom_data_x->set_property_name("custom_data_x");
+	custom_data_x->set_default_uniform(0);
+
+	Ref<SpicyFloatProperty> custom_data_y(memnew(SpicyFloatProperty));
+	custom_data_property_y = custom_data_y;
+	custom_data_y->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+	custom_data_y->set_property_name("custom_data_y");
+	custom_data_y->set_default_uniform(0);
+
+	Ref<SpicyFloatProperty> custom_data_z(memnew(SpicyFloatProperty));
+	custom_data_property_z = custom_data_z;
+	custom_data_z->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+	custom_data_z->set_property_name("custom_data_z");
+	custom_data_z->set_default_uniform(0);
+
+	Ref<SpicyFloatProperty> custom_data_w(memnew(SpicyFloatProperty));
+	custom_data_property_w = custom_data_w;
+	custom_data_w->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+	custom_data_w->set_property_name("custom_data_w");
+	custom_data_w->set_default_uniform(0);
+}
+
+void godot::CustomDataUpdater::update(double dt, const Ref<ParticleData> p_data)
+{
+	unsigned int endId = p_data->count_alive;
+
+	if (use_builtin_data)
+	{
+		for (size_t i = 0; i < endId; ++i)
+		{
+			p_data->custom_data[i].x = Math::deg_to_rad(p_data->rotation[i].z + p_data->current_rotation[i].z);
+			p_data->custom_data[i].y = p_data->normalized_lifetime[i];
+			p_data->custom_data[i].z = p_data->custom_data[i].y;
+			p_data->custom_data[i].w = 0;
+		}
+	}
+	else
+	{
+		if (custom_data_property_x.is_valid() && custom_data_property_y.is_valid() && custom_data_property_z.is_valid() && custom_data_property_w.is_valid())
+		{
+			for (size_t i = 0; i < endId; ++i)
+			{
+				p_data->custom_data[i].x = custom_data_property_x->get_value(p_data->rng, p_data->normalized_lifetime[i]);
+				p_data->custom_data[i].y = custom_data_property_y->get_value(p_data->rng, p_data->normalized_lifetime[i]);
+				p_data->custom_data[i].z = custom_data_property_z->get_value(p_data->rng, p_data->normalized_lifetime[i]);
+				p_data->custom_data[i].w = custom_data_property_w->get_value(p_data->rng, p_data->normalized_lifetime[i]);
+			}
+		}
+	}
+
+}
+
+void godot::CustomDataUpdater::set_custom_data_property_x(const Ref<SpicyFloatProperty>& p_custom_data_property_x)
+{
+	custom_data_property_x = p_custom_data_property_x;
+
+	if (custom_data_property_x.is_null()) {
+		Ref<SpicyFloatProperty> custom_data_x(memnew(SpicyFloatProperty));
+		custom_data_property_x = custom_data_x;
+		custom_data_x->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+		custom_data_x->set_property_name("custom_data_x");
+		custom_data_x->set_default_uniform(0);
+	}
+}
+
+Ref<SpicyFloatProperty> godot::CustomDataUpdater::get_custom_data_property_x() const
+{
+	return custom_data_property_x;
+}
+
+void godot::CustomDataUpdater::set_custom_data_property_y(const Ref<SpicyFloatProperty>& p_custom_data_property_y)
+{
+	custom_data_property_y = p_custom_data_property_y;
+
+	if (custom_data_property_y.is_null()) {
+		Ref<SpicyFloatProperty> custom_data_y(memnew(SpicyFloatProperty));
+		custom_data_property_y = custom_data_y;
+		custom_data_y->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+		custom_data_y->set_property_name("custom_data_y");
+		custom_data_y->set_default_uniform(0);
+	}
+}
+
+Ref<SpicyFloatProperty> godot::CustomDataUpdater::get_custom_data_property_y() const
+{
+	return custom_data_property_y;
+}
+
+void godot::CustomDataUpdater::set_custom_data_property_z(const Ref<SpicyFloatProperty>& p_custom_data_property_z)
+{
+	custom_data_property_z = p_custom_data_property_z;
+
+	if (custom_data_property_z.is_null()) {
+		Ref<SpicyFloatProperty> custom_data_z(memnew(SpicyFloatProperty));
+		custom_data_property_z = custom_data_z;
+		custom_data_z->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+		custom_data_z->set_property_name("custom_data_z");
+		custom_data_z->set_default_uniform(0);
+	}
+}
+
+Ref<SpicyFloatProperty> godot::CustomDataUpdater::get_custom_data_property_z() const
+{
+	return custom_data_property_z;
+}
+
+void godot::CustomDataUpdater::set_custom_data_property_w(const Ref<SpicyFloatProperty>& p_custom_data_property_w)
+{
+	custom_data_property_w = p_custom_data_property_w;
+
+	if (custom_data_property_w.is_null()) {
+		Ref<SpicyFloatProperty> custom_data_w(memnew(SpicyFloatProperty));
+		custom_data_property_w = custom_data_w;
+		custom_data_w->set_available_types(SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_UNIFORM | SpicyFloatProperty::SpicyFloatType::SPICY_FLOAT_TYPE_CURVE);
+		custom_data_w->set_property_name("custom_data_w");
+		custom_data_w->set_default_uniform(0);
+	}
+}
+
+Ref<SpicyFloatProperty> godot::CustomDataUpdater::get_custom_data_property_w() const
+{
+	return custom_data_property_w;
+}
+
+void godot::CustomDataUpdater::set_use_builtin_data(bool p_use_builtin_data)
+{
+	use_builtin_data = p_use_builtin_data;
+
+	notify_property_list_changed();
+}
+
+bool godot::CustomDataUpdater::get_use_builtin_data() const
+{
+	return use_builtin_data;
+}
+
+void godot::CustomDataUpdater::_get_property_list(List<PropertyInfo>* r_props) const
+{
+	if (use_builtin_data)
+		return;
+
+	if (custom_data_property_x.is_valid()) {
+		custom_data_property_x->get_property_list(r_props);
+	}
+	if (custom_data_property_y.is_valid()) {
+		custom_data_property_y->get_property_list(r_props);
+	}
+	if (custom_data_property_z.is_valid()) {
+		custom_data_property_z->get_property_list(r_props);
+	}
+	if (custom_data_property_w.is_valid()) {
+		custom_data_property_w->get_property_list(r_props);
+	}
+}
+
+bool godot::CustomDataUpdater::_get(const StringName& p_property, Variant& r_value) const
+{
+	if (use_builtin_data)
+		return false;
+
+	bool result = false;
+
+	if (custom_data_property_x.is_valid()) {
+		result = result || custom_data_property_x->get_property(p_property, r_value);
+	}
+	if (custom_data_property_y.is_valid()) {
+		result = result || custom_data_property_y->get_property(p_property, r_value);
+	}
+	if (custom_data_property_z.is_valid()) {
+		result = result || custom_data_property_z->get_property(p_property, r_value);
+	}
+	if (custom_data_property_w.is_valid()) {
+		result = result || custom_data_property_w->get_property(p_property, r_value);
+	}
+	return result;
+}
+
+bool godot::CustomDataUpdater::_set(const StringName& p_property, const Variant& p_value)
+{
+	if (use_builtin_data)
+		return false;
+
+	bool result = false;
+
+	if (custom_data_property_x.is_valid()) {
+		result = result || custom_data_property_x->set_property(p_property, p_value, Ref<Resource>(this));
+	}
+	if (custom_data_property_y.is_valid()) {
+		result = result || custom_data_property_y->set_property(p_property, p_value, Ref<Resource>(this));
+	}
+	if (custom_data_property_z.is_valid()) {
+		result = result || custom_data_property_z->set_property(p_property, p_value, Ref<Resource>(this));
+	}
+	if (custom_data_property_w.is_valid()) {
+		result = result || custom_data_property_w->set_property(p_property, p_value, Ref<Resource>(this));
+	}
+	return result;
+}
+
+bool godot::CustomDataUpdater::_property_can_revert(const StringName& p_name) const
+{
+	if (use_builtin_data)
+		return false;
+
+	bool result = false;
+
+	if (custom_data_property_x.is_valid()) {
+		result = result || custom_data_property_x->can_property_revert(p_name);
+	}
+	if (custom_data_property_y.is_valid()) {
+		result = result || custom_data_property_y->can_property_revert(p_name);
+	}
+	if (custom_data_property_z.is_valid()) {
+		result = result || custom_data_property_z->can_property_revert(p_name);
+	}
+	if (custom_data_property_w.is_valid()) {
+		result = result || custom_data_property_w->can_property_revert(p_name);
+	}
+	return result;
+}
+
+bool godot::CustomDataUpdater::_property_get_revert(const StringName& p_name, Variant& r_property) const
+{
+	if (use_builtin_data)
+		return false;
+
+	bool result = false;
+
+	if (custom_data_property_x.is_valid()) {
+		result = result || custom_data_property_x->get_property_revert(p_name, r_property);
+	}
+	if (custom_data_property_y.is_valid()) {
+		result = result || custom_data_property_y->get_property_revert(p_name, r_property);
+	}
+	if (custom_data_property_z.is_valid()) {
+		result = result || custom_data_property_z->get_property_revert(p_name, r_property);
+	}
+	if (custom_data_property_w.is_valid()) {
+		result = result || custom_data_property_w->get_property_revert(p_name, r_property);
+	}
+	return result;
 }
