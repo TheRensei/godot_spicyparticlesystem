@@ -501,7 +501,7 @@ void godot::SpicyParticleSystemNode::set_duration(float p_duration)
 	duration = p_duration;
 	m_particle_system->final_data()->max_duration = duration;
 
-	_update_burst_times();
+	//_update_burst_times();
 }
 
 float godot::SpicyParticleSystemNode::get_duration() const
@@ -532,15 +532,15 @@ TypedArray<SpicyParticleBurst> godot::SpicyParticleSystemNode::get_emit_bursts()
 	return m_emit_bursts;
 }
 
-void godot::SpicyParticleSystemNode::_update_burst_times()
-{
-	for (int i = 0; i < m_emit_bursts.size(); ++i)
-	{
-		Ref<SpicyParticleBurst> burst = m_emit_bursts[i];
-		if (burst.is_valid())
-			burst->time = CLAMP(burst->time, 0, duration);
-	}
-}
+//void godot::SpicyParticleSystemNode::_update_burst_times()
+//{
+//	for (int i = 0; i < m_emit_bursts.size(); ++i)
+//	{
+//		Ref<SpicyParticleBurst> burst = m_emit_bursts[i];
+//		if (burst.is_valid())
+//			burst->time = CLAMP(burst->time, 0, duration);
+//	}
+//}
 
 void godot::SpicyParticleSystemNode::set_delay(float p_preprocess_time)
 {
