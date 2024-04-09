@@ -51,6 +51,10 @@ void godot::SpicyParticleSystemModuleInspectorPlugin::_control_ref_added(Control
 				{
 					prop->set_self_modulate(base_ref->get_theme_color("property_color_z", "Editor"));
 				}
+				if (prop->get_edited_property().ends_with("_w"))
+				{
+					prop->set_self_modulate(base_ref->get_theme_color("property_color_w", "Editor"));
+				}
 			}
 		}
 	}
