@@ -29,7 +29,7 @@ namespace godot
 	class SpicyParticleSystemNode : public GeometryInstance3D {
 		GDCLASS(SpicyParticleSystemNode, GeometryInstance3D)
 	private:
-		const float simulation_delta = 0.016667; //60fps
+		const double SIMULATION_DELTA = 0.016667; //60fps
 		bool initialized;
 		real_t max_particles;
 
@@ -74,7 +74,6 @@ namespace godot
 		real_t delay;
 		real_t simulation_speed;
 		double simulation_time;
-		double internal_process_time;
 		double normalized_duration_time;
 
 		Ref<Mesh> mesh;
@@ -87,7 +86,7 @@ namespace godot
 		static void _bind_methods();
 		void _validate_property(PropertyInfo& property) const;
 		void _update_null_properties();
-		void _update_burst_times();
+		//void _update_burst_times();
 		void _notification(int p_what);
 		void _stop_no_signal();
 	public:
@@ -98,8 +97,7 @@ namespace godot
 
 		void initialize(size_t max_count);
 		void emit_burst(int count);
-		void seek(double sim_time);
-		void step(double delta);
+		void seek(double t);
 
 		void pause(bool include_children = true);
 		void play(bool include_children = true);

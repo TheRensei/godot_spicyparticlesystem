@@ -159,15 +159,11 @@ godot::SpicyParticleSystemNode::~SpicyParticleSystemNode()
 {
 }
 
-double frame_remainder = 0;
-
 void godot::SpicyParticleSystemNode::_internal_process(double delta)
 {
 
 	if (is_paused && !is_playing || is_stopped || !is_visible_in_tree() || !is_inside_tree())
 	{
-		frame_remainder = 0;
-		internal_process_time = 0;
 		return;
 	}
 
@@ -287,7 +283,6 @@ void godot::SpicyParticleSystemNode::_stop_no_signal()
 
 	rng->set_state(rng_state);
 	simulation_time = 0.0f;
-	internal_process_time = 0.0f;
 	normalized_duration_time = 0.0f;
 }
 
@@ -598,26 +593,35 @@ bool godot::SpicyParticleSystemNode::get_randomize_seed() const
 	return randomize_seed;
 }
 
-void godot::SpicyParticleSystemNode::seek(double sim_time)
+void godot::SpicyParticleSystemNode::seek(double t)
 {
-	if (!initialized || !is_visible_in_tree() || !is_inside_tree())
+	if (!initialized || !is_visible_in_tree() || !is_inside_tree() || t <= 0)
 		return;
 
-	_stop_no_signal();
-	pause();
-	m_particle_system->set_emitting(true);
+	double current_sim_time = simulation_time;
 
+	double temp = 0;
 
-	simulation_time = sim_time;
+	if (t > current_sim_time)
+	{
+		temp = current_sim_time;
+		play();
+		pause();
+	}
+	else
+	{
+		_stop_no_signal();
+		pause();
+		m_particle_system->set_emitting(true);
+	}
 
 	//simulate until that point with 60 fps delta
-	//could probably be optimized
-	float temp = 0;
-	while (temp < simulation_time)
+
+	while (temp < t)
 	{
 		normalized_duration_time = std::fmod(temp, duration) / duration;
-		m_particle_system->update(simulation_delta, normalized_duration_time, node_transform);
-		temp += simulation_delta;
+		m_particle_system->update(SIMULATION_DELTA, normalized_duration_time, node_transform);
+		temp += SIMULATION_DELTA;
 
 		if (temp >= duration && !looping)
 		{
@@ -629,31 +633,7 @@ void godot::SpicyParticleSystemNode::seek(double sim_time)
 		}
 	}
 
-	m_renderer->update();
-	m_renderer->render();
-
-}
-
-void godot::SpicyParticleSystemNode::step(double delta)
-{
-	if (!initialized || !is_visible_in_tree() || !is_inside_tree())
-		return;
-
-	pause();
-	m_particle_system->set_emitting(true);
-
-	normalized_duration_time = std::fmod(delta, duration) / duration;
-	m_particle_system->update(delta, normalized_duration_time, node_transform);
-	simulation_time += delta;
-
-	if (simulation_time >= duration && !looping)
-	{
-		m_particle_system->set_emitting(false);
-		if (m_particle_system->num_alive_particles() == 0)
-		{
-			_stop_no_signal();
-		}
-	}
+	simulation_time = temp;
 
 	m_renderer->update();
 	m_renderer->render();
@@ -778,17 +758,6 @@ bool godot::SpicyParticleSystemNode::get_is_playing()
 void godot::SpicyParticleSystemNode::set_simulation_time(double p_simulation_time)
 {
 	seek(p_simulation_time);
-
-	//double d = p_simulation_time - simulation_time;
-	//if (d > 0)
-	//{
-	//	step(d);
-	//}
-	//else
-	//{
-	//	seek(p_simulation_time);
-	//}
-
 }
 
 double godot::SpicyParticleSystemNode::get_simulation_time() const
