@@ -51,7 +51,7 @@ Spicy Particle System is a powerful and customizable particle system written in 
 https://github.com/TheRensei/godot_spicyparticlesystem/assets/32361344/80133633-27d2-4c04-aa2d-94d1a64f414e
 
 ## Documentation
-Detailed documentation will be available in the [Wiki](https://github.com/TheRensei/godot_spicyparticlesystem/wiki), providing comprehensive information on installation, usage, and customization. Check out the [getting started](https://github.com/TheRensei/godot_spicyparticlesystem/wiki/Getting-Started) section.
+Detailed documentation will be available in the [Wiki](https://github.com/TheRensei/godot_spicyparticlesystem/wiki), providing comprehensive information on installation, usage, and customization. Check out the [getting started](https://github.com/TheRensei/godot_spicyparticlesystem/wiki/0.-Getting-Started) section.
 
 ## Upcoming features
 > [!NOTE]  
