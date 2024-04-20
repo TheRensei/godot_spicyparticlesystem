@@ -8,7 +8,7 @@
     <img alt="Static Badge" src="https://img.shields.io/badge/Godot-4.2%2B-blue">
   </a>
   <a href="https://github.com/TheRensei/godot_spicyparticlesystem/releases/latest">
-    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/TheRensei/godot_spicyparticlesystem?include_prereleases">
+    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/TheRensei/godot_spicyparticlesystem">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/github/license/TheRensei/godot_spicyparticlesystem?style=flat-square" alt="LICENSE">
