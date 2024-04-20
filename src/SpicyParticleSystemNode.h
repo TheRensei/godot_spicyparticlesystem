@@ -29,9 +29,10 @@ namespace godot
 	class SpicyParticleSystemNode : public GeometryInstance3D {
 		GDCLASS(SpicyParticleSystemNode, GeometryInstance3D)
 	private:
-		const float simulation_delta = 0.016667; //60fps
+		const double SIMULATION_DELTA = 0.016667; //60fps
 		bool initialized;
 		real_t max_particles;
+		bool _render = true;
 
 		//Particle system
 		Ref<SpicyParticleSystem> m_particle_system;
@@ -51,6 +52,7 @@ namespace godot
 		Ref<AccelerationUpdater> m_acceleration_updater;
 		Ref<RotationUpdater> m_rotation_updater;
 		Ref<SizeUpdater> m_size_updater;
+		Ref<CustomDataUpdater> m_custom_data_updater;
 
 		Ref<RandomNumberGenerator> rng;
 		uint64_t rng_state;
@@ -73,20 +75,19 @@ namespace godot
 		real_t delay;
 		real_t simulation_speed;
 		double simulation_time;
-		double internal_process_time;
 		double normalized_duration_time;
 
 		Ref<Mesh> mesh;
 		MultiMeshParticleRenderer::Alignment m_particle_alignment;
 		NodePath m_alignment_target;
+		bool use_custom_data;
 
 		Transform3D node_transform;
-		//bool m_custom_renderer_data = false;
 	protected:
 		static void _bind_methods();
 		void _validate_property(PropertyInfo& property) const;
 		void _update_null_properties();
-		void _update_burst_times();
+		//void _update_burst_times();
 		void _notification(int p_what);
 		void _stop_no_signal();
 	public:
@@ -94,11 +95,11 @@ namespace godot
 		virtual ~SpicyParticleSystemNode();
 		PackedStringArray _get_configuration_warnings() const;
 		void _internal_process(double delta);
+		void _set_render(bool p_render, bool include_children = true);
 
 		void initialize(size_t max_count);
 		void emit_burst(int count);
-		void seek(double sim_time);
-		void step(double delta);
+		void seek(double t, bool include_children = true);
 
 		void pause(bool include_children = true);
 		void play(bool include_children = true);
@@ -184,7 +185,10 @@ namespace godot
 
 		//Scale updater
 		void set_size_updater(const Ref<SizeUpdater>& p_size_updater);
-		Ref<SizeUpdater> get_size_updater() const;
+		Ref<SizeUpdater> get_size_updater() const;		
+		
+		void set_custom_data_updater(const Ref<CustomDataUpdater>& p_custom_data_updater);
+		Ref<CustomDataUpdater> get_custom_data_updater() const;
 
 		// Render properties
 		void set_mesh(const Ref<Mesh>& p_mesh);
@@ -196,8 +200,8 @@ namespace godot
 		void set_alignment_target(const NodePath& p_path);
 		NodePath get_alignment_target() const;
 
-		//void set_custom_renderer_data(bool p_custom_renderer_data);
-		//bool get_custom_renderer_data() const;
+		void set_use_custom_data(bool p_use_custom_data);
+		bool get_use_custom_data() const;
 
 		void set_max_particle_count(int p_max_particle_count);
 		int get_max_particle_count() const;

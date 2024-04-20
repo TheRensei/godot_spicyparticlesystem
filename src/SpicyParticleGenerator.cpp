@@ -22,6 +22,7 @@ void godot::SpicyParticleGenerator::generate(double dt, const Ref<ParticleData> 
 		p_data->current_scale[i] = Vector3(1, 1, 1);
 		p_data->current_rotation[i] = Vector3(0, 0, 0);
 		p_data->acceleration[i] = Vector3(0, 0, 0);
+		p_data->custom_data[i] = Vector4(0, 0, 0, 0);
 		p_data->color[i] = Color(1, 1, 1, 1);
 		p_data->current_color[i] = Color(1, 1, 1, 1);
 		p_data->lifetime[i] = 0;

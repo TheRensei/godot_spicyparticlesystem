@@ -47,13 +47,14 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 	switch (m_alignment) {
 	case ALIGNMENT_LOCAL:
 	{
-		//Should do this by default
 		return;
 	}
 	break;
 	case ALIGNMENT_WORLD:
 	{
-		out_transform.basis = p_data->particle_node->get_global_transform().affine_inverse().basis * out_transform.basis;
+		Basis world = p_data->particle_node->get_global_transform().affine_inverse().basis;
+		out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
+		out_transform.basis = world * out_transform.basis;
 	}
 	break;
 	case ALIGNMENT_SCREEN:
@@ -63,6 +64,7 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 			Basis target_basis = m_alignment_target_node->get_global_basis() * flip_xz;
 
 			out_transform.basis = target_basis * out_transform.basis;
+			out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
 			out_transform.basis = p_node_basis * out_transform.basis;
 		}
 	}
@@ -74,6 +76,7 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 			Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
 			Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
 
+			out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
 			out_transform.basis = target_basis * out_transform.basis;
 			out_transform.basis = p_node_basis * out_transform.basis;
 
@@ -83,22 +86,33 @@ void godot::MultiMeshParticleRenderer::apply_alignment(const Ref<ParticleData> p
 	case ALIGNMENT_VELOCITY:
 	{
 		Vector3 v = p_data->velocity[p_id] + p_data->current_velocity[p_id] + p_data->acceleration[p_id];
-		v.normalize();
+		
+		//this fixes the rotation when worldspace is enabled
+		//there should be another check to enable worldspace for velocity instead of doing it here tho
+		//v = p_data->particle_node->get_global_transform().basis.xform_inv(v);
 
-		Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
+		v = v.normalized();
 
-		if (v.length_squared() > 0.0001 && !v.is_equal_approx(Vector3(0, 1, 0)))
-			out_transform.basis = out_transform.basis.looking_at(v, out_transform.basis.rows[2]) * out_transform.basis;
-		out_transform.basis = p_node_basis * out_transform.basis;
+		Vector3 up = Vector3(0, 1, 0);
+		if (abs(v.dot(up)) > 0.999) {
+			// If velocity is almost up or down, choose a different up vector
+			up = Vector3(0, 0, 1);
+		}
 
+		Basis b = p_data->particle_node->get_global_transform().affine_inverse().basis;
+		b = b.looking_at(v, up);
+
+		out_transform.basis = b * out_transform.basis;
 	}
 	break;
 	case ALIGNMENT_LOOK_AT:
-	{
+	{	
 		if (m_alignment_target_node != NULL) {
+
 			Basis p_node_basis = p_data->particle_node->get_global_transform().affine_inverse().basis;
 			Basis target_basis = p_node_basis.looking_at(m_alignment_target_node->get_global_position(), Vector3(0, 1, 0));
 
+			out_transform.basis.scale(p_data->particle_node->get_basis().get_scale());
 			out_transform.basis = target_basis * out_transform.basis;
 			out_transform.basis = p_node_basis * out_transform.basis;
 		}
@@ -174,11 +188,16 @@ void godot::MultiMeshParticleRenderer::update()
 		ptr[14] = c.b;
 		ptr[15] = c.a;
 
-		float rot = p->rotation[i].z + p->current_rotation[i].z; //that should be calculated before //optimize
-		ptr[16] = Math::deg_to_rad(rot);
-		ptr[17] = p->normalized_lifetime[i];
-		ptr[18] = ptr[17];
-		ptr[19] = 0;
+		//float rot = p->rotation[i].z + p->current_rotation[i].z; //that should be calculated before //optimize
+		//ptr[16] = Math::deg_to_rad(rot);
+		//ptr[17] = p->normalized_lifetime[i];
+		//ptr[18] = ptr[17];
+		//ptr[19] = 0;
+
+		ptr[16] = p->custom_data[i].x;
+		ptr[17] = p->custom_data[i].y;
+		ptr[18] = p->custom_data[i].z;
+		ptr[19] = p->custom_data[i].w;
 
 		ptr += mesh_data_size;
 	}

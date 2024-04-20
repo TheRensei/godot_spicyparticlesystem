@@ -14,6 +14,7 @@ void godot::ParticleData::delete_data()
 	memdelete_arr(current_scale);
 	memdelete_arr(current_rotation);
 	memdelete_arr(acceleration);
+	memdelete_arr(custom_data);
 	memdelete_arr(color);
 	memdelete_arr(current_color);
 	memdelete_arr(lifetime);
@@ -46,6 +47,7 @@ void godot::ParticleData::generate(size_t max_size, const Ref<RandomNumberGenera
 	current_scale = memnew_arr(Vector3, max_size);
 	current_rotation = memnew_arr(Vector3, max_size);
 	acceleration = memnew_arr(Vector3, max_size);
+	custom_data = memnew_arr(Vector4, max_size);
 	current_color = memnew_arr(Color, max_size);
 	color = memnew_arr(Color, max_size);
 	lifetime = memnew_arr(float, max_size);
@@ -89,6 +91,7 @@ void godot::ParticleData::swap(size_t id1, size_t id2)
 	std::swap(current_scale[id1], current_scale[id2]);
 	std::swap(current_rotation[id1], current_rotation[id2]);
 	std::swap(acceleration[id1], acceleration[id2]);
+	std::swap(custom_data[id1], custom_data[id2]);
 	std::swap(color[id1], color[id2]);
 	std::swap(current_color[id1], current_color[id2]);
 	std::swap(lifetime[id1], lifetime[id2]);

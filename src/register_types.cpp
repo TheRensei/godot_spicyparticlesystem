@@ -35,6 +35,7 @@ void initialize_spicyparticlesystem_module(ModuleInitializationLevel p_level) {
 		ClassDB::register_class<AccelerationUpdater>();
 		ClassDB::register_class<RotationUpdater>();
 		ClassDB::register_class<SizeUpdater>();
+		ClassDB::register_class<CustomDataUpdater>();
 
 		ClassDB::register_class<SpicyFloatProperty>();
 		ClassDB::register_class<SpicyVector3Property>();
@@ -50,7 +51,9 @@ void initialize_spicyparticlesystem_module(ModuleInitializationLevel p_level) {
 	}
 
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {
+		ClassDB::register_class<SpicyParticleSystemModuleInspectorPlugin>();
 		ClassDB::register_class<SpicyParticleSystemInspectorPlugin>();
+		ClassDB::register_class<EditorPropertyRandomInteger>();
 		ClassDB::register_class<SpicyParticleSystemPlugin>();
 		EditorPlugins::add_by_type<SpicyParticleSystemPlugin>();
 	}

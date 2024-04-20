@@ -166,6 +166,45 @@ namespace godot
 		bool _property_get_revert(const StringName& p_name, Variant& r_property) const;
 	};
 
+	class CustomDataUpdater : public SpicyParticleUpdater {
+		GDCLASS(CustomDataUpdater, SpicyParticleUpdater);
+	public:
+		Ref<SpicyFloatProperty> custom_data_property_x; //can be built-int or custom //lifetime
+		Ref<SpicyFloatProperty> custom_data_property_y; //can be built-int or custom //loop phase (duration/lifetime)
+		Ref<SpicyFloatProperty> custom_data_property_z; //can be built-int or custom //offset
+		Ref<SpicyFloatProperty> custom_data_property_w; //can be custom
+
+		bool use_builtin_data;
+	protected:
+		static void _bind_methods();
+	public:
+		CustomDataUpdater();
+		virtual ~CustomDataUpdater() {}
+
+		virtual void update(double dt, const Ref<ParticleData> p_data) override;
+
+		void set_custom_data_property_x(const Ref<SpicyFloatProperty>& p_custom_data_property_x);
+		Ref<SpicyFloatProperty> get_custom_data_property_x() const;
+
+		void set_custom_data_property_y(const Ref<SpicyFloatProperty>& p_custom_data_property_y);
+		Ref<SpicyFloatProperty> get_custom_data_property_y() const;
+
+		void set_custom_data_property_z(const Ref<SpicyFloatProperty>& p_custom_data_property_z);
+		Ref<SpicyFloatProperty> get_custom_data_property_z() const;
+
+		void set_custom_data_property_w(const Ref<SpicyFloatProperty>& p_custom_data_property_w);
+		Ref<SpicyFloatProperty> get_custom_data_property_w() const;
+
+		void set_use_builtin_data(bool p_use_builtin_data);
+		bool get_use_builtin_data() const;
+
+		void _get_property_list(List<PropertyInfo>* r_props) const;
+		bool _get(const StringName& p_property, Variant& r_value) const;
+		bool _set(const StringName& p_property, const Variant& p_value);
+		bool _property_can_revert(const StringName& p_name) const;
+		bool _property_get_revert(const StringName& p_name, Variant& r_property) const;
+	};
+
 }
 
 
