@@ -32,6 +32,7 @@ namespace godot
 		const double SIMULATION_DELTA = 0.016667; //60fps
 		bool initialized;
 		real_t max_particles;
+		bool _render = true;
 
 		//Particle system
 		Ref<SpicyParticleSystem> m_particle_system;
@@ -94,10 +95,11 @@ namespace godot
 		virtual ~SpicyParticleSystemNode();
 		PackedStringArray _get_configuration_warnings() const;
 		void _internal_process(double delta);
+		void _set_render(bool p_render, bool include_children = true);
 
 		void initialize(size_t max_count);
 		void emit_burst(int count);
-		void seek(double t);
+		void seek(double t, bool include_children = true);
 
 		void pause(bool include_children = true);
 		void play(bool include_children = true);

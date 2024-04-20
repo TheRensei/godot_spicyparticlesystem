@@ -20,6 +20,7 @@ void godot::SpicyParticleSystemNode::_bind_methods()
 	ClassDB::bind_method(D_METHOD("play", "include_children"), &SpicyParticleSystemNode::play, DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("stop", "include_children"), &SpicyParticleSystemNode::stop, DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("restart", "include_children"), &SpicyParticleSystemNode::restart, DEFVAL(true));
+	ClassDB::bind_method(D_METHOD("seek", "time", "include_children"), &SpicyParticleSystemNode::seek, DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("is_playing"), &SpicyParticleSystemNode::get_is_playing);
 
 	ClassDB::bind_method(D_METHOD("set_emit_rate", "p_emit_rate"), &SpicyParticleSystemNode::set_emit_rate);
@@ -87,6 +88,7 @@ void godot::SpicyParticleSystemNode::_bind_methods()
 	//ClassDB::bind_method(D_METHOD("set_custom_renderer_data", "p_custom_renderer_data"), &SpicyParticleSystemNode::set_custom_renderer_data);
 	//ClassDB::bind_method(D_METHOD("get_custom_renderer_data"), &SpicyParticleSystemNode::get_custom_renderer_data);
 
+	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::FLOAT, "simulation_time"), "set_simulation_time", "get_simulation_time");
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::BOOL, "looping"), "set_looping", "get_looping");
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::FLOAT, "duration", PROPERTY_HINT_RANGE, "0.01,1000000.0,0.01,or_greater,exp,suffix:s"), "set_duration", "get_duration");
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::FLOAT, "delay", PROPERTY_HINT_RANGE, "0,1000000.0,0.01,or_greater,exp,suffix:s"), "set_delay", "get_delay");
@@ -122,9 +124,6 @@ void godot::SpicyParticleSystemNode::_bind_methods()
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::BOOL, "use_custom_data"), "set_use_custom_data", "get_use_custom_data");
 	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::OBJECT, "custom_data_updater", PROPERTY_HINT_RESOURCE_TYPE, "CustomDataUpdater"), "set_custom_data_updater", "get_custom_data_updater");
 	//ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::BOOL, "custom_renderer_data"), "set_custom_renderer_data", "get_custom_renderer_data");
-
-	ClassDB::add_property_group("SpicyParticleSystemNode", "Debug", "");
-	ClassDB::add_property("SpicyParticleSystemNode", PropertyInfo(Variant::FLOAT, "simulation_time"), "set_simulation_time", "get_simulation_time");
 
 	ADD_SIGNAL(MethodInfo("play"));
 	ADD_SIGNAL(MethodInfo("stop"));
@@ -190,9 +189,47 @@ void godot::SpicyParticleSystemNode::_internal_process(double delta)
 			return;
 
 		m_particle_system->update(local_delta, normalized_duration_time, node_transform);
+
+		if (!_render)
+			return;
+
 		m_renderer->update();
 		m_renderer->render();
 	}
+}
+
+void godot::SpicyParticleSystemNode::_set_render(bool p_render, bool include_children)
+{
+	if (include_children) {
+		SpicyParticleSystemNode* parent = Object::cast_to<SpicyParticleSystemNode>(get_parent());
+		if (parent != nullptr)
+		{
+			parent->_set_render(p_render);
+			return;
+		}
+
+		TypedArray<SpicyParticleSystemNode> children = find_children("*", SpicyParticleSystemNode::get_class_static(), true, false);
+		for (int i = 0; i < children.size(); ++i)
+		{
+			SpicyParticleSystemNode* child = cast_to<SpicyParticleSystemNode>(children[i]);
+			child->_set_render(p_render, false);
+		}
+	}
+
+	//update if render state changed
+	if (_render != p_render) 
+	{
+		m_renderer->update();
+		m_renderer->render();
+
+		//reset if not rendering
+		if (p_render == false)
+		{
+			m_renderer->reset();
+		}
+	}
+
+	_render = p_render;
 }
 
 void godot::SpicyParticleSystemNode::_validate_property(PropertyInfo& p_property) const
@@ -250,6 +287,12 @@ void godot::SpicyParticleSystemNode::_notification(int p_what)
 		if (!Engine::get_singleton()->is_editor_hint() && initialized && play_on_start) {
 			play();
 			set_particle_alignment(m_particle_alignment);
+		}
+
+		if (!Engine::get_singleton()->is_editor_hint())
+		{
+			_render = true;
+			return;
 		}
 	} break;
 
@@ -593,10 +636,26 @@ bool godot::SpicyParticleSystemNode::get_randomize_seed() const
 	return randomize_seed;
 }
 
-void godot::SpicyParticleSystemNode::seek(double t)
+void godot::SpicyParticleSystemNode::seek(double t, bool include_children)
 {
-	if (!initialized || !is_visible_in_tree() || !is_inside_tree() || t <= 0)
+	if (!initialized || !is_visible_in_tree() || !is_inside_tree() || t < 0)
 		return;
+
+	if (include_children) {
+		SpicyParticleSystemNode* parent = Object::cast_to<SpicyParticleSystemNode>(get_parent());
+		if (parent != nullptr)
+		{
+			parent->seek(t);
+			return;
+		}
+
+		TypedArray<SpicyParticleSystemNode> children = find_children("*", SpicyParticleSystemNode::get_class_static(), true, false);
+		for (int i = 0; i < children.size(); ++i)
+		{
+			SpicyParticleSystemNode* child = cast_to<SpicyParticleSystemNode>(children[i]);
+			child->seek(t, false);
+		}
+	}
 
 	double current_sim_time = simulation_time;
 
@@ -635,9 +694,11 @@ void godot::SpicyParticleSystemNode::seek(double t)
 
 	simulation_time = temp;
 
+	if (!_render)
+		return;
+
 	m_renderer->update();
 	m_renderer->render();
-
 }
 
 void godot::SpicyParticleSystemNode::pause(bool include_children)

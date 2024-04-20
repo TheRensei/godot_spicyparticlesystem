@@ -51,7 +51,7 @@ namespace godot
 
 		virtual bool _can_handle(Object* p_object) const;
 		virtual bool _parse_property(Object* object, Variant::Type type, const String& name, PropertyHint hint_type, const String& hint_string, BitField<PropertyUsageFlags> usage_flags, bool wide);
-		virtual void _parse_group(Object* object, const String& group);
+		//virtual void _parse_group(Object* object, const String& group);
 
 		inline void set_base_ref(const Control* control) { base_ref = control; }
 	};
@@ -103,7 +103,8 @@ namespace godot
 		Ref<Texture2D> restart_icon;
 		Ref<Texture2D> stop_icon;
 
-		bool only_selected = true;
+		bool only_selected = false;
+		TypedArray<Node> selection;
 
 		bool move_button_down = false;
 		Vector2 mouse_offset = Vector2(0, 0);
@@ -119,6 +120,7 @@ namespace godot
 		void _move_button_down();
 		void _move_button_up();
 		void _set_only_selected(bool show);
+		void _update_selection();
 	protected:
 		static void _bind_methods() {}
 	public:
