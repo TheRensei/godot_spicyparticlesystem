@@ -767,9 +767,6 @@ bool godot::CustomDataUpdater::get_use_builtin_data() const
 
 void godot::CustomDataUpdater::_get_property_list(List<PropertyInfo>* r_props) const
 {
-	if (use_builtin_data)
-		return;
-
 	if (custom_data_property_x.is_valid()) {
 		custom_data_property_x->get_property_list(r_props);
 	}
@@ -786,9 +783,6 @@ void godot::CustomDataUpdater::_get_property_list(List<PropertyInfo>* r_props) c
 
 bool godot::CustomDataUpdater::_get(const StringName& p_property, Variant& r_value) const
 {
-	if (use_builtin_data)
-		return false;
-
 	bool result = false;
 
 	if (custom_data_property_x.is_valid()) {
@@ -808,9 +802,6 @@ bool godot::CustomDataUpdater::_get(const StringName& p_property, Variant& r_val
 
 bool godot::CustomDataUpdater::_set(const StringName& p_property, const Variant& p_value)
 {
-	if (use_builtin_data)
-		return false;
-
 	bool result = false;
 
 	if (custom_data_property_x.is_valid()) {
@@ -830,9 +821,6 @@ bool godot::CustomDataUpdater::_set(const StringName& p_property, const Variant&
 
 bool godot::CustomDataUpdater::_property_can_revert(const StringName& p_name) const
 {
-	if (use_builtin_data)
-		return false;
-
 	bool result = false;
 
 	if (custom_data_property_x.is_valid()) {
@@ -852,9 +840,6 @@ bool godot::CustomDataUpdater::_property_can_revert(const StringName& p_name) co
 
 bool godot::CustomDataUpdater::_property_get_revert(const StringName& p_name, Variant& r_property) const
 {
-	if (use_builtin_data)
-		return false;
-
 	bool result = false;
 
 	if (custom_data_property_x.is_valid()) {
